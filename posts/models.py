@@ -9,18 +9,6 @@ from django.utils.text import slugify
 User = get_user_model()
 
 
-class Image(models.Model):
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-    )
-    image = models.ImageField(
-        null=True,
-        blank=True,
-        upload_to=f'posts/images'
-    )
 
 
 class Post(models.Model):
@@ -47,19 +35,10 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True
-    )
-    # comments = models.ManyToManyField(
-    #     Comment,
-    #     related_name='comments',
-    #     blank=True
-    # )
-    images = models.ManyToManyField(
-        Image,
-        related_name='images',
-        blank=True,
-    )
+    )  
 
     likes = models.PositiveIntegerField(blank=True, default=0)
+
     dislikes = models.PositiveIntegerField(blank=True, default=0)
 
     def __str__(self):
@@ -79,6 +58,26 @@ class Post(models.Model):
         ordering = ['-date_created', 'user']
         unique_together = [['user', 'text', 'date_created']]
 
+
+class Image(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
+    image = models.ImageField(
+        null=True,
+        blank=True,
+        upload_to=f'posts/images'
+    )
+
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
 
 class Comment(models.Model):
     user = models.ForeignKey(
