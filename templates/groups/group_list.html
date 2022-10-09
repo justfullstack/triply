@@ -1,0 +1,63 @@
+<!-- {% extends "base.html"  %}
+{% load static  %}
+
+
+ 
+{% block title %}
+    Trippy | Groups
+{% endblock  %}
+
+
+{% block style %} 
+
+    .left-pane, .right-pane{ 
+        display: none;
+    }
+
+    .main-pane{
+        width: 90%;
+        
+    }
+
+    .groups{
+        border-radius: 5px;
+    }
+
+    .groups .group{
+        border: 1px solid rgb(255, 94, 0);
+        border-radius: 5px;
+    }
+
+    .justify-content{
+        justify-content: space-between;
+    }
+
+    .footer{
+        position: absolute;
+        bottom: 0;
+    }
+
+{% endblock  %}
+
+
+
+{% block main %} 
+    <div class="groups bg-white px-3 py-5 my-5  mt-0 shadow ">
+        <h3>
+            <i class="fa fa-users fa-fw"></i> Groups
+        </h3>
+        {% for group in groups %} 
+        
+            <div class=" group d-flex justify-content py-2 px-2   align-items-center border w-100">
+                <div class="  d-flex justify-content-start gap-3">
+                    <a href="{{ group.get_absolute_url }}">
+                        <div class="group-avatar post-avatar-container">
+                            <img src="{{ group.avatar.url }}" alt="" class="round-img">
+                        </div>
+                    </a>
+                </div>
+            </div> 
+        {% endfor  %}
+    </div>
+    
+{% endblock  %} -->
