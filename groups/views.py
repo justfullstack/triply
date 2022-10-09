@@ -4,8 +4,8 @@ from . import models
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.urls import reverse_lazy, reverse
-
-from posts.models import Post
+from . import forms
+from posts.models import Post, Image
 from profiles.models import Profile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
@@ -49,6 +49,33 @@ class GroupDetailView(generic.DetailView):
         context = super().get_context_data(**kwargs)
         context["posts"] = group_posts
         return context
+
+    def post(self, *args, **kwargs):
+        new_post_form = forms.NewPostForm(
+            self.request.POST, self.request.FILES)
+        user = self.request.user
+
+        if new_post_form.is_valid():
+            text = self.request.POST["text"]
+
+            post = Post.objects.create(
+                text=text,
+                user=user,
+                group=self.get_object()
+            )
+
+            images = self.request.FILES.getlist("images")
+
+            for image in images:
+                img = Image.objects.create(
+                    image=image,
+                    post=post,
+                    user=user
+                )
+                img.save()
+            post.save()
+
+            messages.success(self.request, "Post added successfully!")
 
 
 class EditGroup(LoginRequiredMixin, generic.UpdateView):
