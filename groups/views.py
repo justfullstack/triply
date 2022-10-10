@@ -30,6 +30,7 @@ class CreateGroup(LoginRequiredMixin, generic.CreateView):
     template_name = "groups/group_form.html"
 
     def get_success_url(self):
+
         messages.success(self.request, f"Group '{self.object.name}' created!")
         return reverse("groups:group", kwargs={"slug": self.object.slug})
 
@@ -54,28 +55,60 @@ class GroupDetailView(generic.DetailView):
         new_post_form = forms.NewPostForm(
             self.request.POST, self.request.FILES)
         user = self.request.user
+        group = self.get_object()
 
-        if new_post_form.is_valid():
-            text = self.request.POST["text"]
-
-            post = Post.objects.create(
-                text=text,
-                user=user,
-                group=self.get_object()
+        if user not in group.members.all():
+            messages.error(
+                self.request, "Only group members can share posts on the group timeline!")
+            return redirect(
+                reverse(
+                    "groups:group", kwargs={
+                        'slug': group.slug
+                    }
+                )
             )
 
-            images = self.request.FILES.getlist("images")
+        else:
+            if new_post_form.is_valid():
+                text = self.request.POST["text"]
 
-            for image in images:
-                img = Image.objects.create(
-                    image=image,
-                    post=post,
-                    user=user
+                post = Post.objects.create(
+                    text=text,
+                    user=user,
+                    group=group
                 )
-                img.save()
-            post.save()
 
-            messages.success(self.request, "Post added successfully!")
+                images = self.request.FILES.getlist("images")
+
+                for image in images:
+                    img = Image.objects.create(
+                        image=image,
+                        post=post,
+                        user=user
+                    )
+                    img.save()
+                post.save()
+
+                messages.success(self.request, "Post added successfully!")
+
+                return redirect(
+                    reverse(
+                        "groups:group", kwargs={
+                            'slug': group.slug
+                        }
+                    )
+                )
+            else:
+                for error in new_post_form.errors:
+                    messages.error(self.request, f"{error}")
+
+                return redirect(
+                    reverse(
+                        "groups:group", kwargs={
+                            'slug': group.slug
+                        }
+                    )
+                )
 
 
 class EditGroup(LoginRequiredMixin, generic.UpdateView):
@@ -126,11 +159,16 @@ def joinGroup(request, slug):
 def exitGroup(request, slug):
     group = models.Group.objects.get(slug=slug)
     user = request.user
-    group.members.remove(user)
 
-    group.save()
+    # you cannot leave group if you are admin
+    if group.created_by == user:
+        messages.error(request, f"Admins cannot leave their groups!")
+    else:
+        group.members.remove(user)
 
-    messages.error(request, f"You left the group {group.name}!")
+        group.save()
+
+        messages.error(request, f"You left the group {group.name}!")
 
     return redirect(
         reverse("groups:group", kwargs={'slug': group.slug})

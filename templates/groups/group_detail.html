@@ -11,6 +11,10 @@
 
 {% block style %}
 
+    .round-img{
+        border-radius: 50%;
+    }
+
     .group-pre-content{
         height: 70vh;
     }
@@ -232,13 +236,15 @@
         </div>
 
         <div class="post-list  bg-white  ">
-            <h3 class="text-gray text-start border-bottom fw-600 pl-3">
+            <h3 class="text-gray text-start border-bottom fw-600 pl-3 mb-3 py-5 pb-0">
                 NewsFeed
             </h3>
 
             {% for post in  posts %}
-                <div class="post mb-3">
-                    {% include 'partials/_group_post.html'  %}
+                <div class=" mb-3 bg-gray px-4"> 
+                    <div class="post">
+                        {% include 'partials/_group_post.html'  %} 
+                    </div>
                 </div>
             {% endfor  %}
 
@@ -261,7 +267,7 @@
             {% if member == group.created_by %}
                 <div class="group-member d-flex py-2 px-1 justify-content  align-items-center flex-no-wrap mb-3">
                     <div class="post-avatar-container mr-2">
-                        <img src="{{ member.avatar.url }}" alt="" class="round-img">
+                        <img src="{{ member.avatar.url }}" alt="" class="round-img border">
                     </div>
 
                     <div class="text-success text-center m-0">
@@ -275,7 +281,7 @@
                         <div class="m-0">
                             <h4 class="m-0 text-orange fw-700">@{{ member.username }}</h4>
                             <div class="w-100 d-flex  justify-content-center ">
-                                <a href="#" class="text-success text-center">Follow +</a>
+                                <a href="{% url 'profiles:follow-user' member.slug  %}" class="text-success text-center">Follow +</a>
                             </div>
                         </div>
                     </div> 
@@ -283,9 +289,9 @@
             {% endif  %}
 
             {% if member != group.created_by %}
-                <div class="group-member d-flex py-2 px-1 justify-content  align-items-center flex-no-wrap">
+                <div class="group-member d-flex py-2 px-1 mb-3  justify-content  align-items-center flex-no-wrap">
                     <div class="post-avatar-container mr-2">
-                        <img src="{{ member.avatar.url }}" alt="" class="round-img">
+                        <img src="{{ member.avatar.url }}" alt="" class="round-img border">
                     </div>
                     <div class=" d-flex flex-column justify-content-center align-items-center ">
                         <div class="m-0  justify-content-center align-items-center ">
@@ -293,7 +299,7 @@
                                 <h4 class="m-0 text-orange fw-700">@{{ member.username }}</h4>
                             </div>
                             <div class="w-100 d-flex  justify-content-center ">
-                                <a href="#" class="text-success text-center">Follow +</a>
+                                <a href="{% url 'profiles:follow-user' member.slug  %}" class="text-success text-center">Follow +</a>
                             </div>
                         </div> 
                     </div> 

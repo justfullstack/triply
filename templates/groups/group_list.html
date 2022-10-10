@@ -1,4 +1,4 @@
-<!-- {% extends "base.html"  %}
+{% extends "base.html"  %}
 {% load static  %}
 
 
@@ -9,6 +9,14 @@
 
 
 {% block style %} 
+    .round-img{
+        border-radius: 50%;
+        
+    }
+
+    .post-avatar-container > img{
+        object-fit: cover;
+    }
 
     .left-pane, .right-pane{ 
         display: none;
@@ -37,27 +45,62 @@
         bottom: 0;
     }
 
+    .footer{
+        position: relative;
+    }
+
 {% endblock  %}
 
 
 
 {% block main %} 
-    <div class="groups bg-white px-3 py-5 my-5  mt-0 shadow ">
-        <h3>
-            <i class="fa fa-users fa-fw"></i> Groups
-        </h3>
-        {% for group in groups %} 
-        
-            <div class=" group d-flex justify-content py-2 px-2   align-items-center border w-100">
-                <div class="  d-flex justify-content-start gap-3">
-                    <a href="{{ group.get_absolute_url }}">
-                        <div class="group-avatar post-avatar-container">
-                            <img src="{{ group.avatar.url }}" alt="" class="round-img">
+    <div class="container-fluid d-flex"> 
+            <div class=" row groups bg-white px-3 py-5 my-5  mt-0 shadow ">
+                <h3>
+                    <i class="fa fa-users fa-fw"></i> Groups
+                </h3>
+                {% for group in groups %} 
+                
+                    <div class=" group d-flex justify-content py-2 px-2  mb-3  align-items-center border br-5 w-100 col-lg-5 ">
+                        <div class="  d-flex justify-content-start gap-3">
+                            <div>
+                                <a href="{{ group.get_absolute_url }}">
+                                    <div class="group-avatar post-avatar-container">
+                                        <img src="{{ group.avatar.url }}" alt="" class="round-img border">
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="d-flex flex-column justify-content-start align-items-start gap-1">
+                                
+                                <div class="text-orange fw-600">
+                                    <a href="{{ group.get_absolute_url }}" class="text-decoration-none">
+                                        {{ group.name }}
+                                    </a>
+                                </div>
+
+
+                                <small class=" {% if group.type == 'Public' %} text-success {% else  %} text-orange {% endif %}">{{ group.type }}</small>  
+                            </div>
                         </div>
-                    </a>
-                </div>
+
+                        <div class="d-flex justify-content-center text-gray">
+                            {{ group.members.all.count }} members
+                        </div>
+
+                        <div>
+                            {% if request.user in group.members.all %}  
+                                <a href="{% url 'groups:join-group' group.slug   %}" class="btn bg-success px-5 ">
+                                    Join <i class="fa fa-plus"></i>
+                                </a>
+                            {% else  %}
+                                <a href="{% url 'groups:exit-group' group.slug   %}" class="btn bg-danger px-5">
+                                    Leave <i class="fa fa-times"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div> 
+                {% endfor  %}
             </div> 
-        {% endfor  %}
     </div>
-    
-{% endblock  %} -->
+{% endblock  %}
