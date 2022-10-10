@@ -1,22 +1,21 @@
-from distutils.command.upload import upload
+
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from groups.models import Group
 from django.utils.text import slugify
+from django.utils import timezone
 
 
 User = get_user_model()
 
 
-
-
 class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     slug = models.SlugField(unique=True, null=True, blank=True)
-    date_created = models.DateTimeField(auto_now_add=True, null=True)
-    date_last_edited = models.DateTimeField(auto_now=True, null=True)
-    text = models.TextField(max_length=200,
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_last_edited = models.DateTimeField(auto_now=True)
+    text = models.TextField(max_length=1000,
                             null=True,
                             blank=True,
                             # editable=False
@@ -35,7 +34,7 @@ class Post(models.Model):
         on_delete=models.CASCADE,
         null=True,
         blank=True
-    )  
+    )
 
     likes = models.PositiveIntegerField(blank=True, default=0)
 
@@ -46,8 +45,11 @@ class Post(models.Model):
 
     def save(self, *args, **kwargs):
         #self.text_html = misaka.html(self.text)
-        self.slug = slugify(f"{self.user.username}  + {self.date_created}")
-        super().save(*args, **kwargs)
+        if not self.slug:
+            self.slug = slugify(f"{self.user.username}  + {timezone.now()}")
+            super().save(*args, **kwargs)
+        else:
+            super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('posts:post',
@@ -79,6 +81,7 @@ class Image(models.Model):
         blank=True,
     )
 
+
 class Comment(models.Model):
     user = models.ForeignKey(
         User,
@@ -101,12 +104,22 @@ class Comment(models.Model):
         blank=True
     )
 
+    slug = models.SlugField(unique=True, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        #self.text_html = misaka.html(self.text)
+        if self.slug is None:
+            self.slug = slugify(
+                f"{self.user.username}  -comment-  + {timezone.now()}")
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return f"comment by {self.user.username}"
 
     def get_absolute_url(self):
         return reverse('posts:comment',
-                       kwargs={'pk': self.pk}
+                       kwargs={'slug': self.slug}
                        )
 
     class Meta:
@@ -128,12 +141,24 @@ class CommentReply(models.Model):
         null=True,
         blank=True,
     )
+
     created_at = models.DateTimeField(auto_now_add=True, null=True)
+
     body = models.TextField(
         max_length=200,
         null=True,
         blank=True
     )
+
+    slug = models.SlugField(unique=True, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        #self.text_html = misaka.html(self.text)
+        if self.slug is None:
+            self.slug = slugify(
+                f"{self.user.username} -comment-reply-  + {timezone.now()}")
+
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-created_at', 'user']

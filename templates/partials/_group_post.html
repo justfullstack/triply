@@ -1,0 +1,95 @@
+{% load static %}
+
+<div class=" group-post d-flex justify-content align-items-center w-100 mb-2 ">
+    <div class="d-flex justify-content  align-items-center w-100">  
+        <div  class="d-flex justify-content-start  align-items-center">
+            <div class="post-avatar-container mr-3 my-3">
+                <img src="{{ post.user.avatar.url }}" alt="" class=" round-img post-avatar  mx-2">
+            </div>
+        
+            <div class=" flex-column  justify-content-center align-items-start"> 
+                <h3 class=" text-orange fw-600 m-0">@{{ post.user.username }}</h3>  
+                <small class="text-gray text-start m-0"  >{{ post.date_created }}</small>
+            </div>
+        </div>
+        {% if post.user == request.user %} 
+             <ul class="list-style-none text-gray text-hover-orange d-flex gap-2 mx-2">
+                <li>
+                    <a href="{% url 'posts:post' post.slug %}" class="text-decoration-none  text-gray text-hover-orange ">
+                        <i class="fa fa-reply"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'posts:edit-post' post.slug %}" class="text-decoration-none  text-gray text-hover-orange ">
+                        <i class="fas fa-pen"></i>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{% url 'posts:delete-post' post.slug %}" class="text-decoration-none  text-gray text-hover-orange ">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </li>
+             </ul>
+            
+        {% endif  %}
+    </div> 
+</div>
+<div class="">
+    <div class="  text-gray">
+        {% if post.image_set.all.count > 0  %} 
+            <div class="slider my-2"> 
+                {% for  image in post.image_set.all %} 
+                    <div class=" slide  mb-2 post-media   ">
+                        <a href="{{ post.get_absolute_url }}">
+                            <img src="{{  image.image.url  }}" alt="" class="post-media-media border m-0 p-0">
+                        </a>
+                        
+                    </div>   
+                {% endfor %} 
+
+                {% if post.image_set.all.count > 1  %} 
+                    <div class="d-flex justify-content w-100 m-0 p-0   slider__buttons">
+                        <div class="slider__btn  slider__btn--left px-2  ">
+                            &larr;  
+                        </div>
+
+                        <div class="slider__btn slider__btn--right  px-2   ">
+                            &rarr;
+                        </div> 
+                    </div>  
+
+                    <div class="dots border py-2"></div>
+                {% endif %}
+            </div> 
+        {% endif %}
+            
+        <a href="{{ 'posts:post.get_absolute_url' }}" class="text-decoration-none">
+            <p class="post-text text-gray fw-400 px-2">
+                {{ post.text }}
+            </p>
+        </a>
+        
+    </div>   
+
+    <div class="post-feedback ">
+        <ul class="list-style-none text-end d-flex  justify-content-end align-items-center ">
+            <li class="mr-3 text-gray text-hover-orange"> 
+                <i class="fa fa-eye  "></i> <span class="text-gray text-hover-orange">1.2k</span>
+            </li>
+            <li class="mr-3 text-gray text-hover-orange"> 
+                <i class="fas fa-comment"></i> <span class="text-gray text-hover-orange">{{ post.comment_set.count }}</span>  
+            </li>
+            <li class="mr-3 text-gray text-hover-orange"> 
+                <i class="fas fa-thumbs-up"></i> <span class="text-gray text-hover-orange">{{ post.likes.count }}</span>  
+            </li>
+            <li class="mr-3 text-gray text-hover-orange"> 
+                <i class="fas fa-thumbs-down"></i> <span class="text-gray text-hover-orange">{{ post.dislikes.count }}</span>  
+            </li>
+            <li class="mr-3 text-gray text-hover-orange"> 
+                <i class="fas fa-share-alt"></i> <span class="text-gray text-hover-orange">556</span>  
+            </li> 
+        </ul>
+    </div>
+</div>  

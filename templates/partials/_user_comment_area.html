@@ -1,0 +1,108 @@
+{% load static %}
+
+
+
+
+
+<div class="coment-area">
+    
+    <ul class="we-comet list-style-none"> 
+        {% if comments.count > 0 %}
+            {% for comment in comments  %}
+                <li class="br-3 mb-1">
+                    <div class="comet-avatar post-avatar-container">
+                        <img src="{{ comment.user.avatar.url }}" alt="" class="round-img">
+                    </div>
+                    <div class="we-comment br-5 ">
+                        <div class="coment-head d-flex  justify-content align-items-center    ">
+                            <div class="d-flex justify-content-start align-items-center  ">
+                                <h5>
+                                    <a href="#" title="{{ comment.user.username }}">
+                                        <small><b>@</b></small>{{ comment.user.username }}
+                                    </a>
+                                </h5>
+                                <small class="text-gray pl-4" >{{ comment.created_at }}</span>
+                            </div>
+                            <div>
+                                <a class="we-reply" href="{% url 'posts:comment' comment.slug %}" title="Reply">
+                                    <i class="fas fa-reply fa-fw text-gray text-hover-orange"></i>
+                                </a>
+                                {% if comment.user == request.user %}
+                                    <a class="we-reply" href="{% url 'posts:delete-comment' comment.slug %} " title="Delete Comment">
+                                        <i class="fa fa-trash fa-fw text-gray text-hover-orange"></i> 
+                                    </a> 
+                                    <a class="we-reply " href="{% url 'posts:edit-comment' comment.slug %} " title="Edit comment ">
+                                        <i class="fas fa-pen fa-fw  text-gray text-hover-orange"></i> 
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <p class="text-gray body "  >
+                           {{ comment.body }}
+                        </p>
+                    </div>
+                    
+                    <ul class="list-style-none">
+                        {% if comment.commentreply_set.all.count  > 0 %}
+                            {% for reply in comment.commentreply_set.all %}
+                                <li class="mb-3   co">
+                                    <div class="comet-avatar post-avatar-container">
+                                        <img src="{{ reply.user.avatar.url }}" alt="" class="round-img border">
+                                    </div>
+                                    <div class="we-comment we-comment-reply   br-5">
+                                        <div class="coment-head">
+                                            <div class="d-flex justify-content ">
+                                                <div class="d-flex justify-content ">
+                                                    <h5>
+                                                        <a href="#" title="">
+                                                        {{ reply.user.username }}
+                                                        </a>
+                                                    </h5>
+                                                    <small class="text-gray ml-2">{{ reply.created_at }}</small>
+                                                </div>
+                                                
+
+                                                {% if  reply.user == request.user %}
+                                                <div class="d-flex justify-content-end ">
+                                                    <a class="we-reply" href="{% url 'posts:delete-comment-reply' reply.slug %} " title="Delete Comment Reply">
+                                                        <i class="fa  fa-trash fa-fw text-gray text-hover-orange"></i> 
+                                                    </a> 
+                                                    <a class="we-reply " href="{% url 'posts:edit-comment-reply' reply.slug %} " title="Edit comment reply">
+                                                        <i class="fas fa-pen fa-fw  text-gray text-hover-orange"></i> 
+                                                    </a>
+                                                </div>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <p class="text-gray">
+                                            {{ reply.body }}
+                                        </p>
+                                    </div>
+                                </li>
+                            {% endfor %} 
+                        {% endif %} 
+
+                        
+                    </ul>
+                    
+                    {% include 'partials/forms/_user_comment_reply_form.html' %}
+                </li>
+            {% endfor %} 
+        {% endif %}
+                {# at the end of each, add a new comment form #}
+                {%  if user.is_authenticated %}
+                    <li class="we-comment  new__comment " style="border-radius: 5px;  height: 8rem;  "  >
+                        <div class="px-1 comment-form-container"> 
+                            <div class="post-avatar-container"> 
+                                <img src="{{ user.avatar.url }}" alt="" class="round-img">
+                            </div>
+                            {% include 'partials/forms/_user_comment_form.html' %} 
+                        </div> 
+                    </li>
+                {%  else %}
+                    <div class="d-flex justify-content-end align-items-center mt-4">
+                        <a href="{%url 'users:login'  %}" class="btn">Login to comment</a>
+                    </div>
+                {%  endif %}
+    </ul>
+</div> 

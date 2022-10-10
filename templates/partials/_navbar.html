@@ -1,0 +1,136 @@
+{% load static %}
+
+<div class="navbar bg-white py-1 shadow">
+        <a href="#" class="navbar-brand">
+            Triply
+        </a>
+
+        
+        
+        <div class="d-flex d-flex justify-content  gap-1">
+            <div class="profile-center d-flex align-items-center justify-content  gap-0">
+                <ul class="nav   d-flex align-items-center justify-content ">
+                    <li class="nav-item dropdown no-arrow secondary__search--container ">
+                        <div class="nav-item dropdown no-arrow">
+
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                                <i class="fa fa-search fa-fw  text-gray .text-hover-orange"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in px-3  " id="navbar_secondary_search">
+                                <form class="form d-flex justify-content-center align-items-center  ">{% csrf_token %}
+                                    <input type="text" name="navbar_secondary_search" id="navbar_secondary_search" class="form-control " placeholder="Search a friend...">
+                                    <button type="submit">
+                                        <i class="fa fa-search text-gray text-hover-orange"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown no-arrow home__icon--container ">
+                        <div class="nav-item dropdown no-arrow">
+
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                                <i class="fa fa-home fa-fw  h3 text-gray .text-hover-orange"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in py-5">
+
+                                 
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown no-arrow  notification__icon--container">
+                        <div class="nav-item dropdown no-arrow">
+
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                                <i class="fa fa-bell fa-fw   text-gray .text-hover-orange"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+
+                                <h6 class="dropdown-header bg-black text-center"> Notifications </h6>
+
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="me-3">
+                                        <div class="bg-primary icon-circle">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="small text-gray-500">December 12, 2019</span>
+                                        <p>A new monthly report is ready to download!</p>
+                                    </div>
+                                </a>
+
+                                <a class="dropdown-item text-center small text-gray-500" href="#">
+                                    All Notifications
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown no-arrow ">
+                        <div class="nav-item dropdown no-arrow">
+
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                                <i class="fa fa-envelope fa-fw   text-gray .text-hover-orange"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+
+                                <h6 class="dropdown-header bg-black text-center"> Notifications </h6>
+
+                                <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <div class="me-3">
+                                        <div class="bg-primary icon-circle">
+                                            <i class="fas fa-file-alt text-white"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="small text-gray-500">December 12, 2019</span>
+                                        <p>A new monthly report is ready to download!</p>
+                                    </div>
+                                </a>
+
+                                <a class="dropdown-item text-center small text-gray-500" href="#">
+                                    All Notifications
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown no-arrow  m-0 p-0  navbar-avatar-container">
+                        <div class="nav-item dropdown no-arrow m-0 p-0">
+
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                                <img src="{{ user.avatar.url }}" alt="" class="  round-img navbar-avatar">
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in py-5">
+
+                                Profile links
+                            </div>
+                        </div> 
+                    </li>
+
+                    <li class="nav-item dropdown no-arrow navbar-toggler ">
+                        <div class="nav-item dropdown no-arrow">
+
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"> 
+                                <i class="fa fa-bars fa-fw  h3 text-gray .text-hover-orange"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in py-5">
+
+                                
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+             
+
+                 
+
+                
+            </div>
+        </div>
+</div> 

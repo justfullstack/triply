@@ -1,0 +1,31 @@
+{% extends "base.html"  %}
+{% load static  %}
+
+{% block title %}
+    Trippy | Edit Comment
+     
+{% endblock %}
+
+
+
+ 
+
+
+{% block main  %} 
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <form  method="post" class="form bg-white border px-3  pb-5  col-11  ">{% csrf_token %}
+                <div class="text-orange w-100 fw-600 pt-4">
+                    Edit Comment...
+                </div>
+                <div class="form-group">
+                    <textarea name="text" cols="40" rows="10" maxlength="200" id="id_text" class="form-control border px-3 py-3"  >{{ comment.body }}</textarea>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <button type="submit"  class="btn btn-primary ml-auto  capitalize">Update</button>
+                </div>
+            </form>
+        </div>
+    </div> 
+{% endblock %}
+
