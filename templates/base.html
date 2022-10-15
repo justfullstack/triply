@@ -36,6 +36,10 @@
                 background: #ccc;
                 }
 
+            ::-webkit-scrollbar{
+                color: rgb(255, 94, 0);
+            }
+
 
             .hidden{
                 display: none;
@@ -45,7 +49,11 @@
                 border-radius: 5px;
             }
 
-            
+            .round-img{
+                border-radius: 50%;
+            }
+
+        
 
             .flex-column {
                 display: flex;
@@ -436,7 +444,7 @@
 
             .we-comet > li {
                 display: inline-block;
-                margin-bottom: 20px;
+                /* margin-bottom: 20px; */
                 width: 100%;
             }
 
@@ -483,15 +491,27 @@
                 content: '';
             }
 
-            .we-comet > li ul {
-                margin-left: 55px;
-                margin-top: 20px;
-                padding-left: 0;
+
+            .we-comment{
+                font-size: 1.2rem;
+                color: gray;
+            }
+
+            .we-comment-reply{
+                font-size: 1rem;
+                color: rgba(128, 128, 128, 0.682); 
+            }
+
+            .we-comet > li > ul { 
                 list-style: none;
             }
 
-            .we-comet > li ul li {
-                margin-bottom: 20px;
+            .we-comet > li > ul > li {
+                margin-bottom: 1rem;
+            }
+
+            .we-comet > li > ul > li > p {
+                color: gray; 
             }
 
             .we-comet li a.showmore {
@@ -520,8 +540,7 @@
                 color: #2a2a2a;
             }
 
-            .we-comment > p {
-                font-size: 14px;
+            .we-comment > p { 
                 line-height: 26px;
                 margin-bottom: 0;
                 max-width: 100%;
@@ -529,15 +548,13 @@
             }
 
             .we-reply {
-                text-transform: capitalize;
-                font-size: 13px;
+                text-transform: capitalize; 
                 display: inline-block;
                 margin-left: 10px;
             }
 
             .coment-head > span {
-                color: #999;
-                font-size: 12px;
+                color: #999; 
                 padding-left: 10px;
                 display: inline-block;
             }
@@ -552,7 +569,7 @@
             .comment-form-container{
                 position: relative;
                 height: 7rem;
-                width: 37rem;
+                width: 35rem;
             }
 
             .new__comment--form {
@@ -625,6 +642,28 @@
 
             }
 
+            /* change order on medium screen*/
+            @media(max-width: 990px) {
+                .left-pane{
+                    order: 1;
+                }
+
+                .right-pane{
+                    order: 2;
+                }
+
+                .main-pane{
+                    order: 3;
+                }
+
+                .right-pane, .left-pane{
+                    width: 96%;
+                    margin: 0 auto;
+                }
+
+
+            }
+
             
 
 
@@ -638,24 +677,27 @@
 
         {% block pre-content %}{% endblock %}
 
-        <div class="container-fluid">
-            <div class="row justify-content-center py-5">
+        <div class="container-fluid"> 
+
+            <div class="row justify-content  py-5">
                 <!-- left pane -->
-                <div class="col-2 left-pane"> 
+                <div class="col-lg-2 col-md-6 col-sm-12 left-pane mb-5"> 
                     {% block left %}{% endblock %}
                 </div>
 
                 <!-- main pane -->
-                <div class="col-6 main-pane">
+                <div class="col-lg-6 col-md-12 main-pane ">
                     {% block main %}{% endblock %}
                 </div>
 
                 <!-- right pane -->
-                <div class="col-3 right-pane">
+                <div class="col-lg-3 col-md-6 col-sm-12 right-pane mb-5">
                     {% block right %}{% endblock %}
                 </div>
 
             </div>
+
+             
 
  
 
@@ -666,8 +708,8 @@
             {% include 'partials/_footer.html'   %}
         </div>
 
-        <script src="{% static 'js/script.js' %}"></script> 
-        <script  src="{% static  'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/script.js' %}"></script%}"></script>> 
+        <script  src="{% static  'js/bootstrap.min.js' script>
         {% block js %}{% endblock %}
     </body>
 </html>

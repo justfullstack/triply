@@ -3,7 +3,7 @@ import logging
 from django.views import View
 from django.urls import reverse, reverse_lazy
 from .forms import UserCreationForm
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,6 +17,8 @@ from django.contrib.auth import authenticate, login
 from django.utils import timezone
 from . import forms
 from django.contrib.auth.decorators import login_required
+from profiles.models import Profile
+
 
 
 User = get_user_model()
@@ -52,6 +54,10 @@ class UserCreationView(View):
             new_user.is_active = False
             new_user.save()
 
+            # create a profile for the user
+            usr_profile = Profile.objects.create(user=new_user)
+            usr_profile.save()
+
             # send welcome email
             form.send_mail()
 
@@ -62,7 +68,7 @@ class UserCreationView(View):
             domain = get_current_site(request).domain
 
             link = reverse(
-                'activate',
+                'users:activate',
                 kwargs={'uidb64': uidb64, 'token': token}
             )
 
@@ -93,7 +99,7 @@ class UserCreationView(View):
             logger.info(
                 f"Account created successfully for {new_user.username}...!")
 
-            return redirect("activate-account-message")
+            return redirect("users:activate-account-message")
 
         else:
             print(form.errors)
@@ -131,7 +137,7 @@ class LoginView(View):
                                 messages.success(
                                     request, f"Success! You're now logged in as {user.username}")
                                 login(request, user)
-                                return redirect("create-profile")
+                                return redirect("users:create-profile")
                             else:
                                 login(request, user)
                                 messages.success(
@@ -141,12 +147,12 @@ class LoginView(View):
                             messages.error(
                                 request, f"Username password mismatch")
                     else:
-                        messages.error(request, f"Your email address is not verified!")
-                        return redirect("activate-account-message")
+                        messages.error(
+                            request, f"Your email address is not verified!")
+                        return redirect("users:activate-account-message")
 
             except User.DoesNotExist:
                 messages.error(request, f"User not found!")
-    
 
         return render(request, "auth/login.html", {"form": form})
 
@@ -156,6 +162,7 @@ class CreateProfileView(LoginRequiredMixin, View):
     def post(self, request):
 
         user = request.user
+        usr_profile = Profile.objects.get(user=request.user)
 
         form = forms.UserProfilecreationForm(request.POST, request.FILES)
 
@@ -165,6 +172,10 @@ class CreateProfileView(LoginRequiredMixin, View):
             user.cover = request.FILES['cover']
             user.about = request.POST["about"]
             user.save()
+
+            usr_profile.city = request.POST["city"]
+            usr_profile.country = request.POST["country"]
+            usr_profile.save()
 
             logger.info(f"Profile created for user {user.username}")
 
@@ -199,7 +210,7 @@ class AccountActivationView(View):
 
             if user.is_active:
                 messages.success(request, "Your account is already activated!")
-                return redirect('login')
+                return redirect('users:login')
 
             # check link validity
             if not token_generator.check_token(user, token):
@@ -213,10 +224,11 @@ class AccountActivationView(View):
                 f"Account for {user.username} activated successfully...!")
 
             messages.success(request, "Account activated successfully!")
-            return redirect('login')
+
+            return redirect('users:login')
 
         except Exception as e:
-            messages.error(e)
+            messages.error(request, "e")
 
 
 class LogoutView(auth_views.LogoutView):

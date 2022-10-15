@@ -1,0 +1,115 @@
+{% extends "auth/base_auth.html" %}
+{% load static %}
+
+
+{% block title %}
+    Triply | Create your Profile
+{% endblock  %}
+    
+
+    
+
+
+
+
+{% block style %}
+    .border{
+        border-radius: 5px;
+    }
+
+    .character-counter{
+        color: red;
+        position: absolute;
+        right: 5%;
+        bottom:1%;
+    }
+     
+{% endblock  %}
+
+
+
+{% block content %}
+
+    <div class="container-fluid  m-0">
+        <div class="row justify-content-center">
+            <form 
+                enctype="multipart/form-data"   
+                class="form col-sm-12  col-lg-9 shadow mx-3  my-5 px-4 py-4 border   " 
+                method="post"  
+                style="background: #fff;" 
+                action="{% url 'users:create-profile' %}"
+                id="createProfileForm">
+                {% csrf_token %}
+
+                <h1 class="text-center my-3  fw-200 " >
+                    Create your <span style="font-weight: 800;  " class="text-orange">Profile</span> 
+
+                    <hr>
+                </h1>
+
+
+                <div class="form-group row  d-flex justify-content"> 
+                    <!-- avatar -->
+                    <div class="col-xs-12  col-sm-5   col-lg-5  mb-2  flex-column justify-content-center">
+                        <label for="id_avatar" >Avatar:</label> 
+                        <input type="file" name="avatar" id="id_avatar" >
+                    </div>
+
+                    <!-- cover --> 
+                    <div class="col-xs-12 col-sm-5    col-md-5 col-lg-5 ">
+                        <label for="id_cover">Cover:</label> 
+                        <input type="file" name="cover" id="id_cover" >
+                    </div> 
+                </div> 
+
+
+                <div class="form-group row  d-flex justify-content"> 
+                    <!-- city -->
+                    <div class="col-xs-12  col-sm-5   col-lg-5  mb-2  flex-column justify-content-center">
+                        <label for="id_avatar" >City:</label> 
+                        {{ form.city }}
+                    </div>
+
+                    <!-- country --> 
+                    <div class="col-xs-12 col-sm-5    col-md-5 col-lg-5 ">
+                        <label for="id_cover">Country:</label> 
+                        {{ form.country }}
+                    </div> 
+                </div>
+
+                 
+
+
+                <!-- about -->
+                <div class="form-group px-3 mt-2">
+                    <textarea name="about" cols="40" rows="10" maxlength="400" class="form-control px-2" placeholder="Tell others a little about you..." id="id_about"></textarea>
+                    <div class="character-counter">
+                        -400
+                    </div>
+                </div>
+
+                <div class=" row form-group mt-3 justify-content-center">
+                    <button type="submit" class="col-8 btn btn-primary btn-block  submit__btn ">
+                        Submit
+                    </button> 
+                </div>
+
+                
+                
+            </form>
+        </div>
+    </div>
+    
+{% endblock  %}
+
+{% block js %}
+    <script type="text/javascr">
+        "use strict";
+        const maxValue = document.querySelector("form>div>textarea").maxlength;
+        // const counterContainer = document.querySelector('');
+        // const counter  = document.querySelector('');
+
+        console.log(maxValue);
+    </script>
+{% endblock  %}
+

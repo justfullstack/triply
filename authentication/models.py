@@ -3,6 +3,8 @@ from django.core.validators import validate_email
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
+from django.utils.text import slugify
+from django.urls import reverse
 
 
 class CustomUserManager(BaseUserManager):
@@ -43,26 +45,21 @@ class CustomUserManager(BaseUserManager):
 
         return user
 
-    def create_superuser(self, username, password, **extra_fields):
+    def create_superuser(self, username, password, first_name=None):
         if not username:
             raise ValueError(_("Username is required!"))
 
         if not password:
             raise ValueError(_("Password is required!"))
 
-        extra_fields.setdefault("is_active", True)
-        extra_fields.setdefault("is_admin", True)
-        extra_fields.setdefault("is_staff", True)
-        extra_fields.setdefault("is_superuser", True)
-
         superuser = self.model(username=username)
         superuser.set_password(password)
 
         # # set permissions
-        # superuser.is_active = True
-        # superuser.is_superuser = True
-        # superuser.is_staff = True
-        # superuser.is_admin = True
+        superuser.is_active = True
+        superuser.is_superuser = True
+        superuser.is_staff = True
+        superuser.is_admin = True
 
         if not superuser.is_superuser:
             raise ValueError(_("Superuser must have is_superuser=True."))
@@ -81,7 +78,7 @@ class CustomUser(AbstractBaseUser):
 
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name' or 'last_name', ]
+    REQUIRED_FIELDS = [('first_name' or 'last_name'), ]
 
     first_name = models.TextField(
         'First Name',
@@ -120,6 +117,9 @@ class CustomUser(AbstractBaseUser):
         blank=True
     )
 
+    slug = models.SlugField(
+        allow_unicode=True, unique=True, null=True, blank=True)
+
     avatar = models.ImageField(
         null=True, blank=True,
         upload_to="users/avatars")
@@ -133,6 +133,9 @@ class CustomUser(AbstractBaseUser):
     cover = models.ImageField(
         null=True, blank=True,
         upload_to="users/covers")
+
+    # profile = models.ForeignKey(
+    #     Profile, on_delete=models.CASCADE, related_name="profile")
 
     date_joined = models.DateTimeField(
         'date_joined',
@@ -177,8 +180,11 @@ class CustomUser(AbstractBaseUser):
         blank=True
     )
 
+    class Meta:
+        ordering = ["username", "email"]
+
     def __str__(self):
-        return f'{self.username})'
+        return f'@{self.username}'
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
@@ -186,9 +192,14 @@ class CustomUser(AbstractBaseUser):
         return True
 
     def has_module_perms(self, app_label):
-        "Does the user have permissions to view the app ‘app_label‘?"
+        "Does the user have permissions to view the app  ?"
         # Simplest possible answer: Yes, always
         return True
+
+    def get_absolute_url(self):
+        return reverse('users:user',
+                       kwargs={'slug': self.slug}
+                       )
 
     def save(self, *args, **kwargs):
         self.is_staff = self.is_admin
@@ -197,5 +208,7 @@ class CustomUser(AbstractBaseUser):
             self.is_superuser
             or self.is_staff
         )
+
+        self.slug = slugify(self.username)
 
         super().save(*args, **kwargs)

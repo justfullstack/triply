@@ -10,6 +10,8 @@ from . import forms
 from profiles.models import Profile
 
 
+
+
 class PostListView(generic.ListView):
     model = models.Post
     template_name = "posts/post_list.html"
@@ -268,3 +270,16 @@ class DeleteCommentReply(LoginRequiredMixin, generic.DeleteView):
 #     def get_success_url(self):
 #         messages.error(self.request, "Comment deleted!")
 #         return reverse_lazy("posts:posts")
+
+
+def likePost(request, slug):
+    post = models.Post.objects.get(slug=slug)
+    liker = request.user
+
+    if liker in post.likers.all():
+        pass
+    else:
+        post.likes += 1
+        post.likers.add(liker)
+
+        post.save()

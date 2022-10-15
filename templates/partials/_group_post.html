@@ -1,4 +1,5 @@
 {% load static %}
+{% load date_formatter %}
 
 <div class=" group-post d-flex justify-content align-items-center w-100 mb-2 bg-white  ">
     <div class="d-flex justify-content  align-items-center w-90">  
@@ -9,7 +10,7 @@
         
             <div class=" flex-column  justify-content-center align-items-start"> 
                 <h3 class=" text-orange fw-600 m-0">@{{ post.user.username }}</h3>  
-                <small class="text-gray text-start m-0"  >{{ post.date_created }}</small>
+                <small class="text-gray text-start m-0 post-date"  >{{ post.date_created | date_formatter }}</small>
             </div>
         </div>
         {% if post.user == request.user %} 

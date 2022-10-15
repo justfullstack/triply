@@ -1,0 +1,883 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="wswport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %}</title>
+        
+        
+        <!-- stylesheets -->
+        <!--=============== FAVICON ===============-->
+        <link rel="shortcut icon" href="{% static '/img/favicon.png' %}" type="image/x-icon">
+
+        <!-- Bootsrtap CSS -->
+        
+        <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+
+        <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css'%}">
+        <link rel="stylesheet" href="{% static 'fonts/font-awesome.min.css'%}">
+        <link rel="stylesheet" href="{% static 'fonts/fontawesome5-overrides.min.css'%}">
+
+        <!-- Custom CSS -->  
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+        <!-- JS scripts -->   
+        <script defer src="{% static  'bootstrap/js/bootstrap.min.js' %}"></script>
+        <script defer src="{% static 'js/script.js' %}"></script> 
+        <script defer src="{% static 'js/slider.js' %}"></script>
+        {% block js %}{% endblock js %}
+
+
+        <style type="text/css">
+            :root{
+                --text-gray: #ccc;
+                --bg-gray:  #ccc;
+                --text-orange:  rgb(255, 94, 0);
+                --bg-orange:   rgb(255, 94, 0);
+
+            }
+                    
+            /* general styling  */
+            * {
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: "Times New Romans";
+                transition: display 0.3s;
+                text-transform: none;
+            }
+
+            body {
+                overflow-x: hidden;
+                background: #ccc;
+                transition: .4s;
+            }
+
+            .btn {
+                border-radius: 5px;
+            }
+
+            .btn:active{ 
+                transform: scale(0.8);
+                transform: translateY(0.1rem);
+            }
+
+            a .hover-orange:hover {
+                color: var(--bg-orange);
+            }
+
+
+            a:active{ 
+                outline: none;
+                border: none;
+                box-shadow: none;
+                transform: scale(0.8);
+                transform: translateY(0.1rem);
+            }
+
+            a:focus{ 
+                outline: none;
+                border: none;
+                box-shadow: none;
+                transform: scale(0.8);
+                transform: translateY(0.1rem);
+            }
+
+            .text-gray{
+                color: gray;
+            }
+
+            .text-orange{
+                color: var(--bg-orange);
+            }
+
+            .text-hover-orange:hover{
+                color: var(--bg-orange);
+            }
+
+            .bg-transparent{
+                background: transparent;
+            }
+
+
+            .bg-gray{
+                background: var(--bg-gray);
+            }
+
+            .bg-orange{
+                background: var(--bg-orange);
+            }
+
+            .fw-100{
+                font-weight: 100;
+            }
+
+            .fw-200{
+                font-weight: 200;
+            }
+
+            .fw-300{
+                font-weight: 300;
+            }
+
+            .fw-400{
+                font-weight: 400;
+            }
+
+            .fw-500{
+                font-weight: 500;
+            }
+
+            .fw-600{
+                font-weight: 600;
+            }
+
+            .fw-700{
+                font-weight: 700;
+            }
+
+            .fw-800{
+                font-weight: 800;
+            }
+
+
+            .list-style-none{
+                list-style-type: none;
+            }
+
+
+            .w-100{
+                width: 100%;
+            }
+
+            .w-90{
+                width: 90%;
+            }
+
+            .w-80{
+                width: 80%;
+            }
+
+            .w-70{
+                width: 70%;
+            }
+
+            .w-60{
+                width: 60%;
+            }
+
+            .w-50{
+                width: 50%;
+            }
+
+            .w-40{
+                width: 40%;
+            }
+
+            .w-30{
+                width: 30%;
+            }
+
+            .w-20{
+                width: 20%;
+            }
+
+            .w-10{
+                width: 10%;
+            }
+            
+
+            .hidden{
+                display: none !important;
+            }
+
+            .justify-content{
+                justify-content: space-between;
+            }
+
+
+            .title{
+                text-transform: capitalize;
+            }
+
+            .lower{
+                text-transform: lowercase;
+            }
+
+            .upper{
+                text-transform: uppercase;
+            }
+
+
+            .text-decoration-none{
+                text-decoration: none;
+            }
+
+            .underline{
+                text-decoration: underline;
+            }
+
+            .line-through{
+                text-decoration: line-through;
+            }
+
+            .inline{
+                display: inline;
+            }
+
+
+            .flex-column{
+                display: flex;
+                flex-direction: column;
+                gap:  -2em;
+            }
+
+            .flex-wrap{
+                flex-wrap: wrap;
+            }
+
+
+            .flex-no-wrap{
+                flex-wrap: nowrap;
+            }
+
+            .justify-content-start{
+                justify-content: flex-start;
+            }
+
+
+
+            /* navbar  */
+            .navbar nav{
+                flex-wrap: nowrap;
+            }
+
+            
+            
+
+            .navbar-brand {
+                font-size: 2rem;
+                margin-left: 0;
+                color: rgb(255, 95, 0);
+                font-weight: 800;
+                text-transform: capitalize;
+            }
+
+            .navbar .form-inline{
+                    display: flex;
+                }
+
+
+            .navbar .form-inline button{
+                    outline: none;
+                    background: transparent;
+                    border: none;
+                    color: rgb(255, 95, 0);
+                    transform: translateX(-110%);
+                }
+
+
+            .navbar .fas { 
+                    margin: 0;
+                    padding: 0;
+                    color: var(--text-gray);
+                }
+
+            .navbar .badge{
+                    transform: translate(3.3rem, -1.1rem);
+                    margin: 0;
+                    padding: 0.1rem 0.3rem;
+                    width: 1.5rem;
+                    height: 1rem;
+                }
+            
+            .new-friends-badge{
+                position: absolute;
+                transform: translate(4.9rem, -3.1rem);
+                }
+
+             .messages-badge, .notifications-badge{
+                position: absolute;
+                transform: translate(-0.5rem,  -0.4rem);
+             }
+
+            .topbar-divider{
+                    height: 3rem;
+                    width: 1px;
+                    background: var(--bg-gray);
+                    margin: 0  auto
+                }
+
+            .navbar #avatar{
+                    border: 1px solid rgb(255, 94, 0);
+                }
+
+            .navbar .avatar img{
+                    object-fit: cover;
+                }
+
+
+            /* user profile  */
+            .cover{
+                height: 50vh;
+            }
+
+            .cover img{
+                height: 100%;
+                object-fit: fill;
+            }
+
+
+            .avatar{
+                transform: translateY(-5rem);
+            }
+
+            .profile-avatar{
+                height: 10rem;
+                width: 10rem;
+                object-fit: cover;
+                border-radius: 13px 0 13px 0;
+                border:  6px solid rgba(255, 94, 0, 0.7);
+                position: sticky;
+                z-index: 3;
+                margin-left: 1rem;
+            }
+
+            .avatar-content{
+                position: sticky;
+                z-index: 2;
+                background: #ccc;
+                align-items: center;
+                
+            }
+
+
+            .profile-links{
+                padding:  0 0 0 10rem;
+                transform: translateY(-5rem);
+                position: sticky;
+                z-index: 1;
+                align-items: center;
+                height: 6rem;
+                border-bottom: 2px solid var(--bg-orange);
+            }
+
+
+            .profile-links .nav .nav-link{
+                font-size:  1.5rem;
+            }
+
+            .some-other{
+                display: flex;
+                justify-content: flex-end;
+                transform: translateY(-16rem);
+                /*border: 2px solid var(--bg-orange);*/
+                position: sticky;
+                z-index: 2;
+            }
+
+            .some-other h3{
+                margin:  0 auto;
+            }
+
+
+
+            /* profile content  */
+            .profile-content{
+                transform: translateY(5rem);
+                
+            }
+
+            .profile-body{
+                /*border: 2px solid var(--bg-orange);*/
+                transform: translateY(-10rem);
+            }
+
+            .left-panel, .main-panel, .right-panel{
+                border-radius: 5px;
+            } 
+
+            .all-info li:hover .fas{
+                color: var(--bg-orange);
+            }
+
+            .round-img{
+                border-radius: 50%;
+            }
+
+            /* right panel  */
+
+            #newsFeedTitle{
+                font-size: 2rem;
+                font-weight: 800;
+                text-decoration: underline;
+                margin-bottom: 3px;
+                padding: 2px 0;
+            }
+
+
+            .right-panel .follower-img img{  
+                height: 4rem;
+                width: 4rem;
+            }
+
+            
+            .add-friend:hover, .see-all:hover{
+                color: var(--bg-gray);
+            }
+
+            .main-panel div, .left-panel div, .right-panel div{
+                border-radius: 5px;
+            }
+
+            /* posts  */
+            .post{
+                border: 1px solid var(--bg-orange);
+            }
+
+           
+
+
+            .post-avatar  {  
+                height: 4rem;
+                width: 4rem;
+            }
+
+            .post-text{
+                font-size:  1.1rem;
+            }
+
+
+            /* new post form */
+           
+
+            /* post image slider  */
+            /* SLIDER */
+            .slider {
+              max-width: 100rem;
+              height: 25rem;
+              margin: 0 auto;
+              position: relative;
+
+              /* IN THE END */
+              overflow: hidden;
+              /* overflow: visible; */
+            }
+
+            .slide {
+              position: absolute;
+              top: 0;
+              width: 100%;
+              /*height: 30rem; */
+              display: flex;
+              align-items: center;
+              justify-content: center;
+
+              /* THIS creates the animation! */
+              transition: transform 1s;
+            }
+/* 
+            .slide > img {
+              Only for images that have different size than slide 
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+            }*/
+
+            .slider__btn {
+              position: absolute;
+              top: 50%;
+              z-index: 10;
+
+              border: none;
+              background: rgba(255, 255, 255, 0.7); 
+              /*color: #333;*/
+              border-radius: 50%; 
+              font-size: 2.25rem; 
+              text-align: center;
+            }
+
+
+            .slider__btn:hover {
+                color: var(--bg-orange);
+                background: rgba(0, 0, 0, 0.5);
+                cursor: pointer;
+            }
+
+
+            .slider__btn:active { 
+                font-size: 2.0rem;
+                color: #fff;
+
+            }
+
+            .slider__btn--left {
+              left: 2%;
+              transform: translate(-50%, -50%);
+            }
+
+            .slider__btn--right {
+              right: 2%;
+              transform: translate(50%, -50%);
+            }
+
+            .dots {
+              position: absolute;
+              bottom: 5%;
+              left: 50%;
+              transform: translateX(-50%);
+              display: flex;
+            }
+
+            .dots__dot {
+              border: none;
+              background-color: #b9b9b9;
+              opacity: 0.7;
+              height: 1rem;
+              width: 1rem;
+              border-radius: 50%;
+              margin-right: 1.75rem;
+              cursor: pointer;
+              transition: all 0.5s;
+
+              /* Only necessary when overlying images */
+              /* box-shadow: 0 0.6rem 1.5rem rgba(0, 0, 0, 0.7); */
+            }
+
+            .dots__dot:last-child {
+              margin: 0;
+            }
+
+            .dots__dot--active {
+               background-color: #fff; 
+               border:  0.1rem solid gray;
+              /*background-color: #888;*/
+              opacity: 1;
+              transform: scale(1.1);
+            }
+             
+
+
+
+
+
+            /*posts comments */
+
+            .post-feedback{
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-end;
+                /*border: 1px solid var(--bg-orange);*/
+            }
+
+            .post-feedback .fas, .fa {
+                font-size: 1.2rem; 
+                color: rgb(137, 137, 137);
+            }
+
+            .post-feedback .fas:hover, .fa:hover { 
+                color: var(--bg-orange);
+                cursor: pointer;
+            }
+
+            .post-feedback .fas:active, .fa:active { 
+                transform: scale(0.8);
+                transform: translateY(0.1rem);
+            }
+
+
+            .post-feedback ul li {
+                margin-right: 1rem; 
+            }
+
+           .slide{
+            height: fit-content;
+           }
+
+            .post-media-media{
+                border-radius: 3px;
+                width: 100%; 
+                overflow-x: hidden; 
+            }
+ 
+            /* user post comment area  */ 
+
+            .coment-area {
+                display: inline-block;
+                margin-top: 10px;
+                width: 100%;
+            }
+
+            .we-comet {
+                float: left;
+                width: 100%;
+                padding-left: 0;
+                list-style: none;
+            }
+
+            .we-comet > li {
+                display: inline-block;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+            .we-comet > li:last-child {
+                margin-bottom: 0;
+            }
+
+            .comet-avatar {
+                display: table-cell;
+                max-width: 7.6%;
+                vertical-align: top;
+                width: 7.6%;
+            }
+
+            .we-comment {
+                border: 1px solid #ede9e9;
+                display: table-cell;
+                margin-left: 20px;
+                padding: 10px;
+                vertical-align: top;
+                position: relative;
+                width: 65%;
+            }
+
+            .we-comment::before,
+            .peoples-mesg-box > ul > li p:before {
+                border-bottom: 10px solid transparent;
+                border-right: 11px solid #ede9e9;
+                border-top: 10px solid transparent;
+                left: -11px;
+                top: 10px;
+                position: absolute;
+                content: '';
+            }
+
+            .we-comment::after,
+            .peoples-mesg-box > ul > li p:after {
+                border-bottom: 8px solid transparent;
+                border-right: 9px solid #fff;
+                border-top: 8px solid transparent;
+                left: -9px;
+                top: 12px;
+                position: absolute;
+                content: '';
+            }
+
+            .we-comet > li ul {
+                margin-left: 55px;
+                margin-top: 20px;
+                padding-left: 0;
+                list-style: none;
+            }
+
+            .we-comet > li ul li {
+                margin-bottom: 20px;
+            }
+
+            .we-comet li a.showmore {
+                display: table;
+                font-size: 12px;
+                margin: 0 auto;
+                text-transform: capitalize;
+            }
+
+            .we-comet > li ul li:last-child {
+                margin-bottom: 0;
+            }
+
+            .coment-head {
+                display: inline-block;
+                width: 100%;
+            }
+
+            .coment-head > h5 {
+                font-size: 15px;
+                font-weight: 600;
+                padding-bottom: 5px;
+                text-transform: capitalize;
+                display: inline-block;
+                margin-bottom: 0;
+                color: #2a2a2a;
+            }
+
+            .we-comment > p {
+                font-size: 14px;
+                line-height: 26px;
+                margin-bottom: 0;
+                max-width: 100%;
+                margin-top: 5px;
+            }
+
+            .we-reply {
+                text-transform: capitalize;
+                font-size: 13px;
+                display: inline-block;
+                margin-left: 10px;
+            }
+
+            .coment-head > span {
+                color: #999;
+                font-size: 12px;
+                padding-left: 10px;
+                display: inline-block;
+            }
+
+            li.post-comment .comet-avatar {
+                display: inline-block;
+                max-width: 6%;
+                vertical-align: top;
+                width: 6%;
+            }
+
+             
+
+ 
+
+
+
+
+            /* footer  */
+            .footer{
+                border-top:  10px solid linear-gradient(var(--bg-orange), #fff);
+            }
+
+
+
+            /* override styling */
+            .hidden{
+                display: none !important;
+            }
+
+
+
+
+
+
+            {% block style %}{% endblock style   %}
+        </style>
+    </head>
+    <body>
+        <!--+ navbar +-->
+        {% include 'partials/navbar.html' %}
+        <!--x navbar x-->
+        <!-- start of messages -->
+        {% include 'partials/_messages.html' %}
+        <!-- end of messages -->
+
+        
+ 
+        <!--+ preprofile +-->
+        <div class="container-fluid p-0   py-1 preprofile">
+            <!-- profile cover -->
+            <div class="row cover bg-dark" >
+                <img src="{{ usr_profile.cover.url }}" alt="" style="opacity: 0.4;  " >
+            </div>
+
+            <div class="row   avatar">
+                <div class="col-lg-3">
+                    <img src="{{ usr_profile.avatar.url }}" alt="" class="profile-avatar">  
+                    
+                </div>
+
+                <div class=" row profile-links bg-white shadow ">
+                    <div class="col-lg-4 col-md-6 user-dets text-center ">
+                        <h2 class="text-orange m-0  fw-800 ">{{ user.first_name }} {{ user.last_name }}</h2>
+                        <small class="user-profession text-gray m-0 text-right justify-content-end h5 fw-200">
+                            @{{ user.username }}
+                        </small>
+                    </div>
+
+
+                    <ul class="col-lg-8 col-md-12 col-sm-12 justify-content-end nav list-style-none d-flex flex-wrap"> 
+                        <li class="nav-item">
+                            <a href="#" class="nav-link  text-gray ">
+                                TimeLine
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link text-gray ">
+                                Photos
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="" class="nav-link  text-gray ">
+                                Friends
+                            </a>
+                            <span class= "new-friends-badge badge px-1 py-1 bg-success">13+</span>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link  text-gray ">
+                                Groups
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link text-gray ">
+                                About
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                
+
+                <div class="some-other justify-content-end text-right py-4 px-3">
+                    
+                    <h3 class="text-white">{{ usr_profile.followers.all.count }} followers</h3>
+                    {% if user == request.user %}
+                        <a href="#" class="text-decoration-none px-5">
+                            <i class="fas fa-pen fa-fw text-white"></i>
+                        </a>
+                    {% else %} 
+                        <a class="btn btn-primary title text-white">
+                            Add Friend <i class="fas fa-plus fa-fw text-white"></i>
+                        </a>   
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <!--x preprofile x-->
+
+        <!--+ body +-->
+        <div class="container-fluid profile-body  ">
+            <div class="row justify-content ">
+                <!--+ left panel +-->
+                <div class="left-panel col-lg-3 bg-transparent ">
+                    {% block left %}{% endblock %}
+                </div>
+                <!--x left panel x-->
+
+
+                <!--+ main panel +-->
+                <div class="main-panel col   bg-transparent">
+                    {% block main %}{% endblock %}
+                </div>
+                <!--x main panel x-->
+
+
+                <!--+ right panel +-->
+                <div class="right-panel col-lg-3  bg-transparent">
+                    {% block right %}
+                    
+                    {% endblock right %}
+                </div>
+                <!--x right panel x-->
+            </div>
+        </div>
+        <!--x body x-->
+
+        {% include 'partials/_footer.html' %}
+
+        
+ 
+        {% block js %}{% endblock %}
+    </body>
+</html>
+
+
+

@@ -141,8 +141,16 @@ class UserLoginForm(forms.Form):
 
 
 class UserProfilecreationForm(forms.Form):
+    COUNTRIES = (
+        ("KE", "Kenya"),
+        ("UG", "Uganda"),
+    )
+
+    city = forms.CharField(label="Your city...", required=False)
+    country = forms.ChoiceField(
+        choices=COUNTRIES, required=False, label="Your country...", initial="Kenya")
     about = forms.CharField(
-        max_length=400, widget=forms.Textarea, required=False)
+        max_length=400, widget=forms.Textarea, required=False,  label="Tell others a little about you...")
 
     avatar = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': False}), required=False)
@@ -150,9 +158,9 @@ class UserProfilecreationForm(forms.Form):
     cover = forms.FileField(
         widget=forms.ClearableFileInput(attrs={'multiple': False}), required=False)
 
-    for field in [about]:
+    for field in [about, city, country, avatar, cover]:
         field.widget.attrs.update({'class': 'form-control px-2'})
 
-    for field in [about]:
+    for field in [city, country, about]:
         field.widget.attrs.update(
-            {"placeholder": "Tell others a little about you..."})
+            {"placeholder": field.label})

@@ -3,6 +3,8 @@ from django.urls import path
 from django.views import generic
 
 
+app_name = "users"
+
 urlpatterns = [
     path(
         "signup/",
