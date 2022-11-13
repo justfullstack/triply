@@ -2,50 +2,50 @@
 
 {% load static %}
 
+<div class="my-page bg-white px-4 w-100">
+    <div class="d-flex gap-2 align-items-center   justify-content-start">
+        <div class="d-flex mx-2 align-items-center">
+            <div class="post-avatar-container">
+                <a title="" href="#" class="w-40"> 
+                    <img alt="" src="{% static 'img/avatars/avatar5.jpeg' %}" class="round-img border border-orange br-50"> 
+                </a>
+            </div>
 
-<div class="widget my-page my-2 container p-0 mb-4"> 
-    <div class="row d-flex justify-content-start align-items-center   "  style="width: auto;" >
-        <figure class="col-lg-3 col-md-2 my-auto mx-1">
-            <a title="" href="#"> 
-                <img alt="" src="{% static 'img/avatars/avatar5.jpeg' %}" class="round-img"> 
-            </a>
-        </figure>
+            <div class="d-flex flex-column text-start">
+                <h4 class="text-orange mb-2"> @{{ request.user.username }}</h4>
+                <div class="d-flex flex-column text-start justify-content-start align-items-center ">
+                    <a href="#" class="text-decoration-none">
+                        <i class="fa fa-envelope text-gray"></i> <span class="text-gray"> Messages</span>
+                    </a>
 
-
-        <div class="page-meta col justify-content-start mx-0 my-1 ">
-            <div class="flex-column">
-                <a class="text-decoration-none h3 text-gray fw-500 underline title " title="" href="#"><u>My Profile</u>  </a>
-                <span>
-                    <i class="fas fa-comment mx-1"></i>Messages <em class="messages-badge badge bg-danger">9</em>
-                </span>
-                <span>
-                    <i class="fas fa-bell  mx-1"></i>Notifications <em class="notifications-badge badge bg-danger">2</em>
-                </span>
+                    <a href="#"   class="text-decoration-none">
+                        <i class="fa fa-bell text-gray"></i> <span class="text-gray"> Notifications</span>
+                    </a>
+                </div>
             </div>
         </div>
+
+        
     </div>
 
-    <div class="row tabbed-nav likes-views px-1 mb-2 ">
-        <div class="col btn btn-primary upper  m-0 mx-2 title">
-            Likes
-        </div> 
-        <div class="col btn btn-primary upper m-0 mx-2 title">
-            <i class="fas fa-eye text-white"></i>Views
-        </div>   
+    <div class="d-flex mx-3 br-5 my-2">
+        <div class="bg-orange px-4 py-2"  style="border-radius: 5px  0  0 5px ;">
+            <a href="#" class="text-white fw-600 text-decoration-none  ">
+                Likes
+            </a>
+        </div>
+        <div class="bg-gray  px-4 py-2 "   style="border-radius:  0 5px 5px 0;">
+            <a href="#"  class="text-white fw-600 text-decoration-none">
+                Views
+            </a>
+        </div>
     </div>
 
-     
-
-    <div class="row text-center my-3 ">
-        <div>
-            <i class="fas fa-heart  h3 mx-2"></i><span class="text-gray h3" >832</span>  
-        </div>
-
-        <div class="text-orange">
-            45 likes this week
-        </div>
-    </div> 
-
- 
+    <div class="text-center">
+        <i class="fa fa-heart text-orange h1"></i> <span class="text-gray fw-600 h1">884</span>
+        <br>
+        <a class="text-decoration-none">
+            <em class="text-success">34 New Likes This Week</em>
+        </a>
+    </div>
 </div>
-

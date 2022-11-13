@@ -1,6 +1,7 @@
 from django.views.generic.edit import FormView
 import logging
 from django.views import View
+from django.views import generic
 from django.urls import reverse, reverse_lazy
 from .forms import UserCreationForm
 from django.shortcuts import redirect, render, get_object_or_404
@@ -18,7 +19,6 @@ from django.utils import timezone
 from . import forms
 from django.contrib.auth.decorators import login_required
 from profiles.models import Profile
-
 
 
 User = get_user_model()
@@ -233,3 +233,25 @@ class AccountActivationView(View):
 
 class LogoutView(auth_views.LogoutView):
     success_url = reverse_lazy('home')
+
+
+class ChangeUserAvatar(generic.UpdateView):
+    model = User
+    fields = ["avatar", ]
+    template_name = "auth/change-user-avatar.html"
+
+    def get_success_url(self, *args, **kwargs):
+        obj = self.get_object()
+        messages.success(self.request, "Avatar updated successfully!")
+        return redirect(reverse("groups:group", kwargs={"slug": obj.slug}))
+
+
+class ChangeUserCover(generic.UpdateView):
+    model = User
+    fields = ["cover", ]
+    template_name = "auth/change-user-cover.html"
+
+    def get_success_url(self, *args, **kwargs):
+        obj = self.get_object()
+        messages.success(self.request, "Cover updated successfully!")
+        return redirect(reverse("groups:group", kwargs={"slug": obj.slug}))

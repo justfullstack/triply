@@ -57,6 +57,11 @@ class GroupDetailView(generic.DetailView):
         user = self.request.user
         group = self.get_object()
 
+        if not user.is_authenticated:
+            messages.error(
+                self.request, "You must be logged in to post!")
+            return redirect(reverse("users:login"))
+
         if user not in group.members.all():
             messages.error(
                 self.request, "Only group members can share posts on the group timeline!")
@@ -173,3 +178,25 @@ def exitGroup(request, slug):
     return redirect(
         reverse("groups:group", kwargs={'slug': group.slug})
     )
+
+
+class ChangeGroupAvatar(generic.UpdateView):
+    model = models.Group
+    fields = ["avatar", ]
+    template_name = "groups/change-group-avatar.html"
+
+    def get_success_url(self, *args, **kwargs):
+        obj = self.get_context_object_name()
+        messages.success(self.request, "Avatar updated successfully!")
+        return redirect(reverse("groups:group", kwargs={"slug": obj.slug}))
+
+
+class ChangeGroupCover(generic.UpdateView):
+    model = models.Group
+    fields = ["cover", ]
+    template_name = "groups/change-group-cover.html"
+
+    def get_success_url(self, *args, **kwargs):
+        obj = self.get_context_object_name()
+        messages.success(self.request, "Cover updated successfully!")
+        return redirect(reverse("groups:group", kwargs={"slug": obj.slug}))

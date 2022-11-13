@@ -47,5 +47,17 @@ urlpatterns = [
         name="exit-group",
     ),
 
+    path(
+        "group/<slug:slug>/settings/change-avatar",
+        views.ChangeGroupAvatar.as_view(),
+        name="change-group-avatar",
+    ),
+
+    path(
+        "group/<slug:slug>/settings/change-coverr",
+        views.ChangeGroupCover.as_view(),
+        name="change-group-cover",
+    ),
+
 
 ]

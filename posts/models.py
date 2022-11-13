@@ -35,11 +35,9 @@ class Post(models.Model):
         null=True,
         blank=True
     )
-
-    likes = models.PositiveIntegerField(blank=True, default=0)
-    likers = models.ManyToManyField(User, related_name="likers")
-    dislikes = models.PositiveIntegerField(blank=True, default=0)
-    dislikers = models.ManyToManyField(User, related_name="dislikers")
+    likers = models.ManyToManyField(User, related_name="likers", blank=True)
+    dislikers = models.ManyToManyField(
+        User, related_name="dislikers",  blank=True)
 
     def __str__(self):
         return f"{self.user.username} on {self.date_created} "
@@ -162,5 +160,5 @@ class CommentReply(models.Model):
         super().save(*args, **kwargs)
 
     class Meta:
-        ordering = ['-created_at', 'user']
+        ordering = ['created_at', 'user']
         unique_together = [['user', 'body', 'comment']]

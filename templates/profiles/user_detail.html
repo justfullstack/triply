@@ -111,7 +111,73 @@
         border-radius: 5px;
 
     }
-    
+
+
+    /* user change avatar*/
+
+    .user-cover{
+        position: relative;
+
+    }
+
+    .user-cover .change-usr-cover{
+        position: absolute;
+        left: 50%;
+        top: 50%; 
+        visibility: hidden;  
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+
+    .user-cover:hover .change-usr-cover{ 
+        visibility: visible;  
+    }
+
+    .user-cover .change-usr-cover a i{
+        font-size: 2rem;
+        font-weight: 900;
+        width: 100%;
+        height: 100%;
+        padding: 3rem;
+        border-radius: 5px;
+        background: rgba(0 ,0 ,0, 0.2);
+        
+    }
+
+     
+    .user-avatar{
+        position: relative;
+
+    }
+
+    .user-avatar .change-usr-avatar{
+        position: absolute;
+        left:  0;
+        top: 0; 
+        visibility: hidden;  
+        cursor: pointer;
+        transition: 0.5s;
+    }
+
+
+    .user-avatar:hover .change-usr-avatar{ 
+        visibility: visible;  
+    }
+
+    .user-avatar .change-usr-avatar a i{
+        font-size: 2rem;
+        font-weight: 900;
+        width: 100%;
+        height: 100%;
+        padding: 5.5rem 4.5rem;
+
+        border-radius: 0 2rem 0 2rem;
+        background: rgba(0 ,0 ,0, 0.2);
+        
+    }
+
+
 {% endblock  %}
 
 
@@ -119,11 +185,26 @@
     <div class="user-pre-content bg-white">
         <div class="user-cover">
             <img src="{{ profile.user.cover.url }}" alt="">
+            {% if request.user ==  profile.user %}
+                <div class="change-usr-cover br-5">
+                    <a href="{% url 'users:change-usr-cover'  profile.user.slug %}" class="text-decoration-none" title="Change Cover">
+                        <i class="fas fa-plus text-white h1"></i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
         <div class="user-profile-data d-flex justify-content  align-items-start   w-100">
             <div class="user-avatar mx-3 ">
-                <img src="{{ profile.user.avatar.url }}" alt="" class="bg-white">
+                <img src="{{ profile.user.avatar.url }}" alt="" class="bg-white"> 
+
+                {% if request.user ==  profile.user %}
+                    <div class="change-usr-avatar br-5">
+                        <a href="{% url 'users:change-usr-avatar'  profile.user.slug %}" class="text-decoration-none" title="Change Avatar">
+                            <i class="fas fa-plus text-white h1"></i>
+                        </a>
+                    </div>
+                {% endif %}
             </div>
             <div class="user-data d-flex justify-content align-items-center w-100">
                 <div class="user-name-type flex-column justify-content-center align-items-center ">
@@ -145,7 +226,7 @@
                 </div>
 
                 <div class="user-actions-links ">
-                    {% if request.user in user.members.all %} 
+                    {% if request.user in user.following.all %} 
                         <a href="#" class="btn leave-btn px-5 {%  if profile.user == request.user %} disabled {% endif %}"  title="{%  if profile.user == request.user %} You cannot unfollow yourself {% endif %}">Unfollow <i class="fa fa-times"></i> </a>
                     {% else %} 
                         <a href="#" class="btn join-btn px-5  {%  if profile.user == request.user %} disabled {%  endif %}" title="{%  if profile.user == request.user %} You cannot follow yourself {% endif %}">Follow <i class="fa fa-plus"></i></a>
@@ -160,16 +241,19 @@
         <ul class=" user-nav d-flex justify-content-end list-style-none">
             
             <li class="nav-item">
-                <a href="#" class="nav-link text-gray  text-hover-orange  ">About</a>
+                <a class="nav-link text-gray  text-hover-orange  ">About</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-gray  text-hover-orange  ">Timeline</a>
+                <a  class="nav-link text-gray  text-hover-orange  ">Timeline</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-gray  text-hover-orange  ">Photos</a>
+                <a class="nav-link text-gray  text-hover-orange  ">Groups</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-gray  text-hover-orange ">Videos</a>
+                <a class="nav-link text-gray  text-hover-orange  ">Photos</a>
+            </li>
+            <li class="nav-item">
+                <a  class="nav-link text-gray  text-hover-orange ">Videos</a>
             </li> 
 
             

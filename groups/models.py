@@ -17,13 +17,21 @@ class Group(models.Model):
         max_length=10, choices=GROUP_TYPES,  blank=True, default="Public")
     slug = models.SlugField(allow_unicode=True, unique=True)
     about = models.TextField(blank=True, default='')
+
     created_by = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True, blank=True, related_name="admin")
+
     avatar = models.ImageField(
-        null=True, blank=True,
-        upload_to="groups/avatars")
-    cover = models.ImageField(null=True, blank=True,
-                              upload_to="groups/covers")
+        null=True,
+        blank=True,
+        upload_to="groups/avatars",
+        default="defaults/avatar.jpg")
+
+    cover = models.ImageField(null=True,
+                              blank=True,
+                              upload_to="groups/covers",
+                              default="defaults/cover.jpg")
+
     description_html = models.TextField(editable=False, blank=True, default='')
     members = models.ManyToManyField(User, through='GroupMembership')
     date_created = models.DateTimeField(auto_now_add=True, null=True)

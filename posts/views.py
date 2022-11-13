@@ -10,8 +10,6 @@ from . import forms
 from profiles.models import Profile
 
 
-
-
 class PostListView(generic.ListView):
     model = models.Post
     template_name = "posts/post_list.html"
@@ -277,9 +275,32 @@ def likePost(request, slug):
     liker = request.user
 
     if liker in post.likers.all():
-        pass
+        post.likers.remove(liker)
+        return redirect(reverse("posts:post", kwargs={"slug": slug}))
     else:
-        post.likes += 1
         post.likers.add(liker)
 
+        if liker in post.dislikers.all():
+            post.dislikers.remove(liker)
+
         post.save()
+        messages.success(request, "You liked this post!")
+        return redirect(reverse("posts:post", kwargs={"slug": slug}))
+
+
+def dislikePost(request, slug):
+    post = models.Post.objects.get(slug=slug)
+    disliker = request.user
+
+    if disliker in post.dislikers.all():
+        post.dislikers.remove(disliker)
+        return redirect(reverse("posts:post", kwargs={"slug": slug}))
+    else:
+        post.dislikers.add(disliker)
+
+        if disliker in post.likers.all():
+            post.likers.remove(disliker)
+
+        post.save()
+        messages.error(request, "You disliked this post!")
+        return redirect(reverse("posts:post", kwargs={"slug": slug}))

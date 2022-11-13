@@ -1,5 +1,6 @@
 {% extends "base.html"  %}
 {% load static  %}
+{% load date_formatter  %}
 
 
  
@@ -77,7 +78,7 @@
                 
                     <div class=" inline flex-column">
                         <h3 class=" text-orange fw-600">@{{ post.user.username }}</h3> 
-                        <small class="text-gray text-start"  >{{ post.date_created }}</small>
+                        <small class="text-gray text-start"  >{{ post.date_created|date_formatter }}</small>
                     </div>
                 </div>
                 <div > 
@@ -152,21 +153,31 @@
                 </div>   
 
                 <div class="post-feedback">
-                    <ul class="list-style-none text-end d-flex justify-content-end">
-                        <li class="mr-3"> 
-                            <i class="fa fa-eye  "></i> <span class="text-orange">1.2k</span>
+                    <ul class="list-style-none text-end d-flex  justify-content-end align-items-center ">
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a class="text-gray text-hover-orange  text-decoration-none">
+                                <i class="fa fa-eye  "></i> <span class="text-gray text-hover-orange">1.2k</span>
+                            </a> 
                         </li>
-                        <li class="mr-3"> 
-                                <i class="fas fa-comment"></i> <span class="text-orange">{{ post.comment_set.all.count }}</span> 
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a href="{% url 'posts:post' post.slug %}" class="text-gray text-hover-orange  text-decoration-none">
+                                <i class="fas fa-comment"></i> <span class="text-gray text-hover-orange">{{ post.comment_set.count }}</span>
+                            </a> 
                         </li>
-                        <li class="mr-3"> 
-                            <i class="fas fa-thumbs-up"></i> <span class="text-orange">{{ post.likes }}</span>  
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a href="{% url 'posts:like-post' post.slug %}" class="text-decoration-none text-gray text-hover-orange {% if request.user in post.likers.all %} text-orange {%  else %} text-gray {% endif  %}">
+                                <i class="fas fa-thumbs-up"></i> <span class="">{{ post.likers.all.count }}</span>  
+                            </a>
                         </li>
-                        <li class="mr-3"> 
-                            <i class="fas fa-thumbs-down"></i> <span class="text-orange">{{ post.dislikes }}</span>  
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a href="{% url 'posts:dislike-post' post.slug %}" class="text-decoration-none text-gray text-hover-orange {% if request.user in post.dislikers.all %} text-orange {%  else %} text-gray {% endif  %}">
+                                <i class="fas fa-thumbs-down"></i> <span class="">{{ post.dislikers.all.count }}</span>  
+                            </a>
                         </li>
-                        <li class="mr-3"> 
-                            <i class="fas fa-share-alt"></i> <span class="text-orange">556</span>  
+                        <li class="mr-3 text-gray text-hover-orange" title="Share post"> 
+                            <a  class="text-gray text-hover-orange text-decoration-none">
+                                <i class="fas fa-share-alt"></i> <span class="text-gray text-hover-orange">0</span> 
+                            </a> 
                         </li> 
                     </ul>
                 </div>

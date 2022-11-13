@@ -33,6 +33,18 @@ urlpatterns = [
     ),
 
     path(
+        "post/<slug:slug>/like/",
+        views.likePost,
+        name="like-post",
+    ),
+
+    path(
+        "post/<slug:slug>/dislike/",
+        views.dislikePost,
+        name="dislike-post",
+    ),
+
+    path(
         "post/comments/comment/<slug:slug>/",
         views.CommentDetailView.as_view(),
         name="comment",
@@ -40,7 +52,6 @@ urlpatterns = [
 
     path(
         "post/comments/comment/<slug:slug>/edit",
-        # views.EditComment.as_view(),
         views.editComment,
         name="edit-comment",
     ),

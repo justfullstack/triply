@@ -12,7 +12,7 @@ class CustomUserManager(BaseUserManager):
 
     use_in_migrations = True
 
-    def create_user(self, first_name, last_name, username, email, password=None,  avatar=None, cover=None):
+    def create_user(self, username, email,  first_name=None, last_name=None,  password=None,  avatar=None, cover=None):
 
         if not (first_name or last_name):
             raise ValueError(_("At least one  name  required!"))
@@ -39,6 +39,8 @@ class CustomUserManager(BaseUserManager):
             is_active=True
 
         )
+
+        user.is_active = False  # activation needed
 
         user.set_password(password)
         user.save(using=self._db)
@@ -122,7 +124,9 @@ class CustomUser(AbstractBaseUser):
 
     avatar = models.ImageField(
         null=True, blank=True,
-        upload_to="users/avatars")
+        upload_to="users/avatars",
+        default="defaults/avatar.jpg"
+    )
 
     about = models.TextField(
         max_length=200,
@@ -132,7 +136,8 @@ class CustomUser(AbstractBaseUser):
 
     cover = models.ImageField(
         null=True, blank=True,
-        upload_to="users/covers")
+        upload_to="users/covers",
+        default="defaults/cover.jpg")
 
     # profile = models.ForeignKey(
     #     Profile, on_delete=models.CASCADE, related_name="profile")

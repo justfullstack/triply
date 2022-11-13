@@ -47,4 +47,18 @@ urlpatterns = [
         name='create-profile'
     ),
 
+    path(
+        'usrs/usr/<slug:slug>/change-avatar',
+        views.ChangeUserAvatar.as_view(),
+        name='change-usr-avatar'
+    ),
+
+    path(
+        'usrs/usr/<slug:slug>/change-cover',
+        views.ChangeUserCover.as_view(),
+        name='change-usr-cover'
+    ),
+
+
+
 ]

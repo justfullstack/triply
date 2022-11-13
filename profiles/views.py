@@ -45,7 +45,7 @@ class UserDetailView(views.View):
     def get(self, request, slug):
         user = User.objects.get(slug=slug)
         posts = Post.objects.filter(user=user)
-        profile = Profile.objects.get(user=user)
+        profile = Profile.objects.get_or_create(user=user)[0]
         new_post_form = NewPostForm()
 
         context = {

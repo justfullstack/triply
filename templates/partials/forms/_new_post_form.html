@@ -1,7 +1,7 @@
 {% load static %}
-<div class="d-flex">
+<div class="d-flex w-100">
 		<div class="new-post-avatar mt-5 mx-1">
-			<img src="{{ user.avatar.url }}" alt="#" class="round-img">
+			<img src="{{ user.avatar.url }}" alt="#" class="round-img border br-50">
 		</div>
 		<form enctype="multipart/form-data" class="form m-0  bg-white " method="POST">{% csrf_token %} 
 			

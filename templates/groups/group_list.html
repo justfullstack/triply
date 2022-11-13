@@ -23,12 +23,13 @@
     }
 
     .main-pane{
-        width: 90%;
+        width: 100%;
         
     }
 
     .groups{
         border-radius: 5px;
+        border: 1px solid rgb(255, 94, 0);
     }
 
     .groups .group{
@@ -49,25 +50,49 @@
         position: relative;
     }
 
+    .groups{
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+
+
+    @media(max-width: 500px){
+        .group{
+            flex-direction: column;
+            box-shadow: 1px 1px 3px #000;
+        }
+    }
+
 {% endblock  %}
 
 
 
 {% block main %} 
-    <div class="container-fluid d-flex"> 
+    <div class="container-fluid d-flex border mx-auto"> 
             <div class=" row groups bg-white px-3 py-5 my-5  mt-0 shadow ">
                 <h3>
                     <i class="fa fa-users fa-fw"></i> Groups
                 </h3>
                 {% for group in groups %} 
                 
-                    <div class=" group d-flex justify-content py-2 px-2  mb-3  align-items-center border br-5 w-100 col-lg-5 ">
-                        <div class="  d-flex justify-content-start gap-3">
+                    <div class=" group d-flex justify-content py-2 px-2  mb-3  align-items-center border br-5 ">
+                        <div class="  d-flex justify-content-start gap-3 col-lg-5 col-sm-6 col-xs-11">
                             <div>
                                 <a href="{{ group.get_absolute_url }}">
                                     <div class="group-avatar post-avatar-container">
                                         <img src="{{ group.avatar.url }}" alt="" class="round-img border">
+
+                                        {% if request.user == group.created_by %}
+                                            <div class="change-avatar-round border" > 
+                                                <a href="{% url 'groups:change-group-avatar' group.slug %}" class="w-100 text-center" title="Change Avatar">
+                                                    <i class="fa fa-plus w-60 h1"></i>
+                                                </a>
+                                            </div>
+                                        {% endif %}
                                     </div>
+
+
+                                    
                                 </a>
                             </div>
 

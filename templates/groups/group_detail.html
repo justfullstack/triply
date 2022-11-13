@@ -112,6 +112,8 @@
         border-radius: 5px;
 
     }
+
+    
     
 {% endblock  %}
 
@@ -120,11 +122,28 @@
     <div class="group-pre-content bg-white">
         <div class="group-cover">
             <img src="{{ group.cover.url }}" alt="">
+
+
+            {%  if request.user == group.created_by %}
+                <div class="change-cover" > 
+                    <a href="{% url 'groups:change-group-cover' group.slug %}" class="w-100 text-center" title="Change Cover">
+                        <i class="fa fa-plus w-60 "></i>
+                    </a>
+                </div>
+            {% endif %}
         </div>
 
         <div class="group-profile-data d-flex justify-content  align-items-start   w-100">
-            <div class="group-avatar mx-3">
+            <div class="group-avatar  mx-3">
                 <img src="{{ group.avatar.url }}" alt="">
+
+                {%  if request.user == group.created_by %}
+                    <div class="change-avatar" > 
+                        <a href="{% url 'groups:change-group-avatar' group.slug %}" class="w-100 text-center" title="Change Avatar">
+                            <i class="fa fa-plus w-60 h1"></i>
+                        </a>
+                    </div> 
+                {% endif %}
             </div>
             <div class="group-data d-flex justify-content align-items-center w-100">
                 <div class="group-name-type flex-column justify-content-center align-items-center ">
@@ -222,10 +241,8 @@
 
 
 
-{% block main %}
-
-
-    <div class="panepy-1 px-3">
+{% block main %} 
+    <div class="pane py-1 px-3 br-5">
 
         <div class="new-postbox mb-5  bg-white " style="border-radius: 5px;">
             {% if user.is_authenticated  %}
@@ -241,7 +258,7 @@
             </h3>
 
             {% for post in  posts %}
-                <div class=" mb-3 bg-gray px-4"> 
+                <div class=" mb-3 bg-gray px-4 pb-5"> 
                     <div class="post">
                         {% include 'partials/_group_post.html'  %} 
                     </div>
@@ -279,7 +296,7 @@
                     
                     <div class="flex-column justify-content-center align-items-center">
                         <div class="m-0">
-                            <h4 class="m-0 text-orange fw-700">@{{ member.username }}</h4>
+                            <h6 class="m-0 text-orange fw-700">@{{ member.username }}</h6>
                             <div class="w-100 d-flex  justify-content-center ">
                                 <a href="{% url 'profiles:follow-user' member.slug  %}" class="text-success text-center">Follow +</a>
                             </div>
@@ -296,7 +313,7 @@
                     <div class=" d-flex flex-column justify-content-center align-items-center ">
                         <div class="m-0  justify-content-center align-items-center ">
                             <div>
-                                <h4 class="m-0 text-orange fw-700">@{{ member.username }}</h4>
+                                <h6 class="m-0 text-orange fw-700">@{{ member.username }}</h6>
                             </div>
                             <div class="w-100 d-flex  justify-content-center ">
                                 <a href="{% url 'profiles:follow-user' member.slug  %}" class="text-success text-center">Follow +</a>

@@ -92,16 +92,18 @@
                 {# at the end of each, add a new comment form #}
                 {%  if user.is_authenticated %}
                     <li class="we-comment  new__comment " style="border-radius: 5px;  height: 8rem; width: 95%;   "  >
-                        <div class="px-1 comment-form-container w-100"> 
+                        <div class="px-1 comment-form-container "> 
                             <div class="post-avatar-container"> 
                                 <img src="{{ user.avatar.url }}" alt="" class="round-img">
                             </div>
-                            {% include 'partials/forms/_user_comment_form.html' %} 
+                            <div class="w-100">
+                                {% include 'partials/forms/_user_comment_form.html' %}
+                            </div> 
                         </div> 
                     </li>
                 {%  else %}
                     <div class="d-flex justify-content-end align-items-center mt-4">
-                        <a href="{%url 'users:login'  %}" class="btn">Login to comment</a>
+                        <a href="{% url 'users:login'  %}?next={%url 'posts:post' post.slug %}" class="btn">Login to comment</a>
                     </div>
                 {%  endif %}
     </ul>
