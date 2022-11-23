@@ -26,15 +26,30 @@
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
         <!-- JS scripts -->   
-        <!-- <script defer src="{% static 'js/script.js' %}"></script> 
-        <script defer src="{% static  'js/bootstrap.min.js' %}"></script> -->
+        <script defer src="{% static 'js/script.js' %}"></script> 
+        <script defer src="{% static  'js/bootstrap.min.js' %}"></script>
         
         <style>
 
             /* general */
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                max-width: 100%;
+            }
+
+
             body{
                 background: #ccc;
+                /* max-width: 100%; */
+                /* overflow-x: hidden; */
                 }
+
+
+            .container-fluid{
+                width: 100%;
+            }
 
             ::-webkit-scrollbar{
                 color: rgb(255, 94, 0);
@@ -711,6 +726,13 @@
 
 
             /* footer */
+            .footer__logo--logo{
+                font-size: 2.5rem; 
+            }
+
+            .footer__logo--logo a{ 
+                text-decoration: none;
+            }
             /* .footer{
                 position: inherit;
                 bottom: 0;
@@ -722,7 +744,7 @@
             .footer {
                 color: gray;
                 text-decoration: none;
-                font-size: 122%;
+                font-size: 92%;
                 font-weight: 200;
             }
 
@@ -782,11 +804,11 @@
                 }
 
                 .main-pane{
-                    order: 3;
+                    order: 2;
                 }
 
                 .right-pane, .left-pane{
-                    width: 96%;
+                    width: 100%;
                     margin: 0 auto;
                 }
 
@@ -798,10 +820,27 @@
             max-width: 100%;
             }
 
+
+            ::-webkit-scrollbar {
+                background-color: #fff;
+                /* background-color: rgba(0, 123, 66, 0.1); */
+                /* border: 1px solid; */
+
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: rgba(255, 94, 0, 1);
+                height: 13vh;
+                border-radius: 15px;
+            }
+
+
             
 
 
-                
+            *{
+                max-width: 100%;
+            }
             {% block style %}{% endblock %}
         </style>
     </head>
@@ -811,21 +850,21 @@
 
         {% block pre-content %}{% endblock %}
 
-        <div class="container-fluid"> 
+        <div class="container-fluid border mt-5 justify-content-center px-3"> 
 
-            <div class="row justify-content  py-5">
+            <div class="row py-5">
                 <!-- left pane -->
-                <div class="col-lg-2 col-md-6 col-sm-12 left-pane mb-5"> 
+                <div class="col-lg-3 col-md-6 col-sm-12 mb-5 left-pane"> 
                     {% block left %}{% endblock %}
                 </div>
 
                 <!-- main pane -->
-                <div class="col-lg-6 col-md-12 main-pane ">
+                <div class="col-lg-6 col-md-12 col-sm-12 main-pane" style="margin: 0 auto;">
                     {% block main %}{% endblock %}
                 </div>
 
                 <!-- right pane -->
-                <div class="col-lg-3 col-md-6 col-sm-12 right-pane mb-5">
+                <div class="col-lg-3 col-md-6 col-sm-12  mb-5 right-pane">
                     {% block right %}{% endblock %}
                 </div>
 
@@ -843,8 +882,9 @@
             {% include 'partials/_footer.html'   %}
         </div>
 
-        <script src="{% static 'js/script.js' %}"></script%}"></script> 
+        <script src="{% static 'js/script.js' %}"></script> 
         <script  src="{% static  'js/bootstrap.min.js' "></script> 
+        <script  src="{% static  'js/bootstrap.js' "></script> 
         {% block js %}{% endblock %}
     </body>
 </html>

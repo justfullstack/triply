@@ -10,6 +10,22 @@
 
 
 {% block style %} 
+
+    .post-container{ 
+        width: 100%; 
+    }
+
+    .post{
+        margin: 0 auto; 
+        justify-self: center;
+    }
+
+
+    .mx-auto{
+        
+    }
+
+
     .slider{
         position: relative;
         height: 22rem;
@@ -34,13 +50,10 @@
     .round-img{
         border-radius: 50%;
     }
-
-    .left-pane, .right-pane{
-        display: none;
-    }
-
+ 
     .main-pane{
-        width: 60%;
+        width: 100%;
+        margin: 0 auto;
     }
  
 
@@ -66,9 +79,9 @@
 
 
 
-{% block main %}
-    <div class="d-flex w-100 justify-content-center">
-        <div class="post-detail post px-3 py-3 my-4 shadow w-100 ">
+{% block main %} 
+    <div class=" post-container  ">
+        <div class="post-detail post px-3 py-3 mx-auto  my-4  shadow w-100 ">
     
             <div class=" post-profile d-flex justify-content align-items-center w-100 mb-2 ">
                 <div class="d-flex  align-items-center">  
@@ -191,7 +204,7 @@
         
         
         </div>
-    </div>
+    </div> 
 {% endblock  %}
 
 

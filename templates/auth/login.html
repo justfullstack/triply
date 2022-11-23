@@ -13,6 +13,18 @@
 	form{
 		background: #fff;
 	}
+
+
+
+	@media(max-width: 700px){
+		body{
+			background: #fff;
+		}
+
+		form{
+			width: 100%;
+		}
+	}
 {%  endblock    %}
 
 
@@ -24,7 +36,7 @@
 	 	<div class="container-fluid">
 	<div class="row justify-content-center m-3">
 
-		<form class=" col-lg-7 col-md-9 col-sm-11 form border   py-2 my-4 bg-white shadow" method="POST" style="background: #fff" action="/auth/login/">{% csrf_token %}
+		<form class=" form border   py-2 my-4 bg-white shadow" method="POST" style="background: #fff" action="/auth/login/">{% csrf_token %}
             
 			<h1 class="text-center mt-5" style="font-weight: 200;">
 				Welcome <span style="font-weight: 800; ">Back</span> 

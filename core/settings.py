@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-%o2kvbgss&wp^x$_(_y46flfd=bvdzyia1a108$h#t&+%1eu$9
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -130,6 +131,12 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "staticfiles/static")]
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
+
+# Deployment: path to the directory where collectstatic will collect static files for deployment.
+# STATIC_ROOT = BASE_DIR/'staticfiles'
+
+# The URL to use when referring to static files (where they will be served from)
+# STATIC_URL = '/static/'
 
 
 # user-uploaded data saved here
@@ -256,5 +263,23 @@ AUTH_USER_MODEL = "authentication.CustomUser"
 
 
 # deploy on heroku
-import django_heroku
-django_heroku.settings(locals())
+# import django_heroku
+# django_heroku.settings(locals())
+
+
+# Deployment: Compressed Simplified static file serving using whitenoise.
+# https://pypi.org/project/whitenoise/
+# reduce the size of the static files when they are served
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+
+
+# deployment
+SESSION_COOKIE_SECURE = True
+
+
+# Deployment: Update database configuration from $DATABASE_URL.
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)

@@ -197,6 +197,16 @@ class ChangeGroupCover(generic.UpdateView):
     template_name = "groups/change-group-cover.html"
 
     def get_success_url(self, *args, **kwargs):
-        obj = self.get_context_object_name()
+        obj = self.get_context_object_name(self)
         messages.success(self.request, "Cover updated successfully!")
         return redirect(reverse("groups:group", kwargs={"slug": obj.slug}))
+
+def searchUser(request):
+    pass
+
+def searchGroup(request):
+    pass
+
+def searchPost(request):
+    pass
+ 

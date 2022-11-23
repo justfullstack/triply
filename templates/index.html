@@ -13,6 +13,28 @@
         border-radius: 50%;
     }
 
+    .round-img{
+        border-radius: 50%;
+    }
+
+
+    .group-avatar{
+        
+        height: 13em;
+        width: 13em;
+        transform: translate(2em, -5.3rem);
+        
+    }
+
+    .group-avatar img{
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        background: #fff;
+        border: 13px solid rgba(255, 84, 0, 0.7);
+        border-radius: 0 2rem 0 2rem;
+    }
+
 
 
 {% endblock %}
@@ -29,15 +51,13 @@
  
 
 {% block main %}
-    <div class="border bg-white">
-        <div class="new-postbox ">
-            {% if user.is_authenticated  %}
-                
-                {% include 'partials/forms/_new_post_form.html'   %}
-                
-            {% endif %}
-        </div> 
-    </div>
+    {% if user.is_authenticated  %}
+        <div class="border bg-white">
+            <div class="new-postbox "> 
+                    {% include 'partials/forms/_new_post_form.html'   %} 
+            </div> 
+        </div>
+    {% endif %}
 
     <div class="  bg-white my-4 py-3"  style="border-radius: 5px;">  
         {% for post in posts  %}
@@ -54,17 +74,17 @@
 
 
 {% block right %}
-    <div class="border bg-white pb-3">
-        {% if user.is_authenticated %}
-            <h4 class="text-gray border-bottom py-2 px-4 ">
-                My Page
-            </h4>
+    {% if user.is_authenticated %}
+        <div class="border bg-white pb-3"> 
+                <h4 class="text-gray border-bottom py-2 px-4 ">
+                    My Page
+                </h4>
 
-            <div class="bg-white " style="width: fit-content;">
-                {% include 'partials/widgets/_my_page_widget.html'  %}
-            </div>
-        {% endif %}
-    </div>
+                <div class="bg-white " style="width: fit-content;">
+                    {% include 'partials/widgets/_my_page_widget.html'  %}
+                </div>
+        </div>
+    {% endif %}
 
     <div class="bg-white mt-3 w-100 br-5 " style="width: fit-content;">
         {% include 'partials/widgets/_whos_following.html'  %}

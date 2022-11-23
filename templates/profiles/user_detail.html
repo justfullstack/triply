@@ -11,6 +11,10 @@
 
 {% block style %}
 
+    .br-5{
+        border-radius: 5px;
+    }
+
     .round-img{
         border-radius: 50%;
     }
@@ -147,8 +151,11 @@
 
      
     .user-avatar{
-        position: relative;
+        position: relative; 
+    }
 
+    .user-avatar img{ 
+        background: #fff;
     }
 
     .user-avatar .change-usr-avatar{
@@ -196,7 +203,7 @@
 
         <div class="user-profile-data d-flex justify-content  align-items-start   w-100">
             <div class="user-avatar mx-3 ">
-                <img src="{{ profile.user.avatar.url }}" alt="" class="bg-white"> 
+                <img src="{{ profile.user.avatar.url }}" alt="" > 
 
                 {% if request.user ==  profile.user %}
                     <div class="change-usr-avatar br-5">
@@ -218,18 +225,18 @@
                 </div>
 
                 <div class="user-members-count ">
-                    {{ profile.followers.count }} followers
+                    {{ profile.user.followers.count }} followers
                 </div>
 
                 <div class="user-members-count ">
-                    {{ profile.following.count }} following
+                    {{ profile.user.following.count }} following
                 </div>
 
                 <div class="user-actions-links ">
-                    {% if request.user in user.following.all %} 
-                        <a href="#" class="btn leave-btn px-5 {%  if profile.user == request.user %} disabled {% endif %}"  title="{%  if profile.user == request.user %} You cannot unfollow yourself {% endif %}">Unfollow <i class="fa fa-times"></i> </a>
+                    {% if profile.user in request.user.following.all %} 
+                        <a href="{% url 'profiles:unfollow-user' profile.user.slug  %}" class="btn leave-btn px-5 {%  if profile.user == request.user %} disabled {% endif %}"  title="{%  if profile.user == request.user %} You cannot unfollow yourself {% endif %}">Unfollow <i class="fa fa-times"></i> </a>
                     {% else %} 
-                        <a href="#" class="btn join-btn px-5  {%  if profile.user == request.user %} disabled {%  endif %}" title="{%  if profile.user == request.user %} You cannot follow yourself {% endif %}">Follow <i class="fa fa-plus"></i></a>
+                        <a href="{% url 'profiles:follow-user' profile.user.slug  %}" class="btn join-btn px-5  {%  if profile.user == request.user %} disabled {%  endif %}" title="{%  if profile.user == request.user %} You cannot follow yourself {% endif %}">Follow <i class="fa fa-plus"></i></a>
                     {% endif %} 
                 </div>
 
@@ -313,7 +320,7 @@
 {% block main %}
 
 
-    <div class="pane py-1 px-3">
+    <div class="pane py-1 px-3 br-5">
 
         {% if request.user == profile.user %}
             <div class="new-postbox mb-5  bg-white " style="border-radius: 5px;">
@@ -332,8 +339,8 @@
 
             {% if posts.count > 0 %}
                 {% for post in  posts %}
-                    <div class=" mb-3 bg-gray px-4"> 
-                        <div class="post">
+                    <div class=" mb-3 bg-gwhite px-4"> 
+                        <div class="post bg-white">
                             {% include 'partials/_group_post.html'  %} 
                         </div>
                     </div>

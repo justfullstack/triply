@@ -68,8 +68,8 @@
 
 
 {% block main %} 
-    <div class="container-fluid d-flex border mx-auto"> 
-            <div class=" row groups bg-white px-3 py-5 my-5  mt-0 shadow ">
+    <div class="container-fluid d-flex  mx-auto"> 
+            <div class=" row groups bg-white px-3 py-5 my-5  mt-0 shadow w-100">
                 <h3>
                     <i class="fa fa-users fa-fw"></i> Groups
                 </h3>
@@ -114,7 +114,7 @@
                         </div>
 
                         <div>
-                            {% if request.user in group.members.all %}  
+                            {% if  user in group.members.all %}  
                                 <a href="{% url 'groups:join-group' group.slug   %}" class="btn bg-success px-5 ">
                                     Join <i class="fa fa-plus"></i>
                                 </a>

@@ -49,9 +49,9 @@
         {% if post.image_set.all.count > 0  %} 
             <div class="slider my-2"> 
                 {% for  image in post.image_set.all %} 
-                    <div class=" slide  mb-2 post-media border  ">
+                    <div class=" slide  mb-2 post-media border-bottom">
                         <a href="{{ post.get_absolute_url }}">
-                            <img src="{{  image.image.url  }}" alt="" class="post-media-media m-0 p-0 br-5">
+                            <img src="{{  image.image.url  }}" alt="" class="post-media-media  img-fluid m-0 p-0 br-5">
                         </a>
                         
                     </div>   

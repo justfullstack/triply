@@ -6,6 +6,14 @@ from groups.models import Group
 from posts.models import Post, Image
 from django.contrib import messages
 import logging
+from django.http import JsonResponse
+import json
+from django.contrib.auth import get_user_model
+
+
+
+
+User = get_user_model()
 
 
 logger = logging.getLogger(__name__)
@@ -15,24 +23,14 @@ class HomeView(View):
     def get(self, request):
         new_post_form = NewPostForm()
         user = request.user
+        
+        posts = Post.objects.all()
 
-        if not user.is_authenticated:
-            posts = []
-
-            context = {
-                'new_post_form': new_post_form,
-                'user': user,
-                'posts': posts
-            }
-        else:
-
-            posts = Post.objects.all()
-
-            context = {
-                'new_post_form': new_post_form,
-                'user': user,
-                'posts': posts
-            }
+        context = {
+            'new_post_form': new_post_form,
+            'user': user,
+            'posts': posts
+        }
 
         return render(request, 'index.html', context=context)
 
@@ -73,3 +71,93 @@ class HomeView(View):
             messages.success(request, "Post added successfully!")
 
         return render(request, 'index.html', context=context)
+
+
+# search views
+# def searchUsers(request):
+    
+#     if request.method == "POST":
+#         searchStr = json.loads(request.body).get("searchText")
+    
+#         foundUsers = (
+#                 User.objects.filter(username__istartswith=searchStr) | 
+#                 User.objects.filter(username__icontains=searchStr)    
+#             )
+        
+#         users = foundUsers.values()
+        
+#         return JsonResponse(list(users), safe=False)
+        
+        
+        
+        
+# def searchGroups(request):
+#     if request.method == "POST":
+        
+#         searchStr = json.loads(request.body).get("searchText")
+        
+#         foundGroups = (
+#                 Group.objects.filter(name__istartswith=searchStr) | 
+#                 Group.objects.filter(name__icontains=searchStr)    
+#             )
+        
+#         groups = foundGroups.values()
+        
+#         return JsonResponse(list(groups), safe=False)
+        
+
+# def searchPosts(request):
+    
+#     if request.method == "POST":
+        
+#         searchStr = json.loads(request.body).get("searchText")
+        
+        
+#         foundPosts = (
+#                 Post.objects.filter(text__icontains=searchStr) 
+#             )
+        
+#         posts = foundPosts.values() 
+        
+#         return JsonResponse(list(posts), safe=False)
+
+
+def searchUsers(request):
+    if request.method == "POST":
+        # search db
+        searchStr = json.loads(request.body).get("searchText")
+
+        users = (
+            User.objects.filter(username__istartswith=searchStr) | 
+            User.objects.filter(username__icontains=searchStr) | 
+            User.objects.filter(first_name__istartswith=searchStr) |  
+            User.objects.filter(last_name__istartswith=searchStr) | 
+            User.objects.filter(last_name__icontains=searchStr) |
+            User.objects.filter(last_name__icontains=searchStr)   
+        )
+
+
+        data = users.values()
+
+        
+        return JsonResponse(list(data), safe=False)
+    
+
+
+def searchGroups(request):
+    if request.method == "POST":
+        # search db
+        searchStr = json.loads(request.body).get("searchText")
+
+        groups = (
+            Group.objects.filter(name__istartswith=searchStr) | 
+            Group.objects.filter(name__icontains=searchStr)    
+        )
+
+
+        data = groups.values()
+
+        
+        return JsonResponse(list(data), safe=False)
+    
+    

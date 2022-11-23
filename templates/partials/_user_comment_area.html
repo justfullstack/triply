@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load date_formatter %}
 
 
 
@@ -17,11 +17,11 @@
                         <div class="coment-head d-flex  justify-content align-items-center    ">
                             <div class="d-flex justify-content-start align-items-center  ">
                                 <h5>
-                                    <a href="#" title="{{ comment.user.username }}">
+                                    <a href="{% url 'profiles:user' comment.user.slug %}" title="{{ comment.user.username }}">
                                         <small><b>@</b></small>{{ comment.user.username }}
                                     </a>
                                 </h5>
-                                <small class="text-gray pl-4" >{{ comment.created_at }}</span>
+                                <small class="text-gray pl-4" >{{ comment.created_at|date_formatter }}</span>
                             </div>
                             <div>
                                 <a class="we-reply" href="{% url 'posts:comment' comment.slug %}" title="Reply">

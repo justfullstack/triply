@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from core import settings
-from django.conf.urls.static import static
+from django.conf.urls.static import static 
+from django.views.decorators.csrf import csrf_exempt
 
 
 app_name = "core"
@@ -54,8 +55,20 @@ urlpatterns = [
         include('posts.urls'),
         name='posts'
     ),
-
-
+    
+    path(
+        'search-users/',
+        csrf_exempt(views.searchUsers),
+        name='search-users'
+    ),
+    
+    
+    path(
+        'search-groups/',
+        csrf_exempt(views.searchGroups),
+        name='search-groups'
+    ),
+  
 
 ] + static(
     settings.MEDIA_URL,

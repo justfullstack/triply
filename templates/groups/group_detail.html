@@ -30,6 +30,7 @@
     }
 
     .group-avatar{
+        
         height: 13em;
         width: 13em;
         transform: translate(2em, -5.3rem);
@@ -39,7 +40,8 @@
     .group-avatar img{
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
+        background: #fff;
         border: 13px solid rgba(255, 84, 0, 0.7);
         border-radius: 0 2rem 0 2rem;
     }
@@ -258,8 +260,8 @@
             </h3>
 
             {% for post in  posts %}
-                <div class=" mb-3 bg-gray px-4 pb-5"> 
-                    <div class="post">
+                <div class=" mb-3 bg-gray px-4 pb-5 bg-white"> 
+                    <div class="post bg-white">
                         {% include 'partials/_group_post.html'  %} 
                     </div>
                 </div>
@@ -331,3 +333,4 @@
 {% block js %}
     <script src="{% static 'js/slider.js' %}"></script>
 {% endblock %}
+

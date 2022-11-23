@@ -2,8 +2,8 @@
 {% load date_formatter %}
 
 <div class=" group-post d-flex justify-content align-items-center w-100 mb-2 bg-white  ">
-    <div class="d-flex justify-content  align-items-center w-90">  
-        <div  class="d-flex justify-content-start  align-items-center">
+    <div class="d-flex justify-content  align-items-center w-90 bg-white">  
+        <div  class="d-flex justify-content-start  align-items-center bg-white">
             <div class="post-avatar-container mr-3 my-3">
                 <a href="{% url 'profiles:user' post.user.slug %}" class="text-decoration-none" title="Go to @{{post.user.username}}">
                     <img src="{{ post.user.avatar.url }}" alt="" class=" round-img post-avatar border  br-50 mx-2">
@@ -59,7 +59,7 @@
                 {% for  image in post.image_set.all %} 
                     <div class=" slide border-bottom br-5  mb-2 post-media   ">
                         <a href="{{ post.get_absolute_url }}">
-                            <img src="{{  image.image.url  }}" alt="" class="post-media-media m-0 p-0">
+                            <img src="{{  image.image.url  }}" alt="" class="post-media-media   img-fluid m-0 p-0">
                         </a>
                         
                     </div>   
