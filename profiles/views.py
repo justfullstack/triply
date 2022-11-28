@@ -23,12 +23,12 @@ class UserListView(views.View):
     def get(self, request):
 
         profiles = Profile.objects.all()
-        current_profile = Profile.objects.get(user=request.user)
+        # current_profile = Profile.objects.get(user=request.user)
 
         context = {
             "profiles": profiles,
             # "users": users,
-            "current_profile": current_profile
+            # "current_profile": current_profile
         }
 
         return render(request, self.template_name, context=context)
