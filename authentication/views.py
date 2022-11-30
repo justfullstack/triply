@@ -98,7 +98,8 @@ class UserCreationView(View):
                 to=[email, ],
             )
 
-            mail.send(fail_silently=False)
+            # mail.send(fail_silently=False)
+            EmailThread(email).start()
 
             logger.info(f'Activation email successfully sent to {email}')
 
@@ -245,11 +246,53 @@ class AccountActivationView(View):
 
 class AccountPasswordResetView(View):
     def get(self, request):
-        pass
+        return render(request, 'auth/reset_password.html')
 
     def post(self, request):
-        pass
+        email = request.POST['email']
+        
+        context = {
+                    "values": request.POST
+                }
 
+        if not validate_email(email):
+            messages.error(request, "Please supply a valid email.")
+            return render(request, 'auth/reset_password.html', context)
+
+        current_site = get_current_site(request)
+        user = User.objects.filter(email=email)
+
+        if user.exists():
+            email_contents = {
+                "user": user[0],
+                "domain": current_site.domain,
+                "uid": urlsafe_base64_encode(force_bytes(user[0].pk)),
+                "token": PasswordResetGenerator().make_token(user[0])
+
+            }
+
+
+            link = reverse("reset-password", kwargs={
+                'uidb64': email_contents['uid'],
+                'token': email_contents['token']
+                })
+
+
+            email_subject = "Password Reset Link"
+
+            reset_link = f"https://{current_site.domain}/{link}"
+
+            email = EmailMessage(
+                email_subject,
+                f"Hi there,\nPlease use the link below to reset you account password",
+                "noreply@modernman.com",
+                [email],
+                )
+
+            EmailThread(email).start()
+        
+        messages.success(request, "A reset link was sent to your email.")
+        return render(request, 'auth/reset_password.html', context)
 
 
 class LogoutView(auth_views.LogoutView):

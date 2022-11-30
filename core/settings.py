@@ -282,6 +282,6 @@ DATABASES['default'].update(db_from_env)
 
 
 # During development/for this tutorial you can instead set just the base URL
-CSRF_TRUSTED_ORIGINS = ['*' ] 
+CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*' ] 
 
 

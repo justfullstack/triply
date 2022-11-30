@@ -33,11 +33,20 @@ urlpatterns = [
     ),
 
 
+
+
     path(
         'activate-account-message/',
         generic.TemplateView.as_view(
             template_name="auth/activate-account-message.html"),
         name='activate-account-message'
+    ),
+
+
+    path(
+        'activate/<uidb64>/<token>/',
+        views.AccountPasswordResetView.as_view(),
+        name='reset-password'
     ),
 
 
