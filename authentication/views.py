@@ -19,11 +19,24 @@ from django.utils import timezone
 from . import forms
 from django.contrib.auth.decorators import login_required
 from profiles.models import Profile
-
+import threading
 
 User = get_user_model()
 
 logger = logging.getLogger(__name__)
+
+
+
+
+class EmailThread(threading.Thread):
+    '''speeds us sending of mails'''
+    def __init__(self, email):
+        self.email = email 
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.email.send(fail_silently=False)
+
 
 
 class UserCreationView(View):
@@ -229,6 +242,14 @@ class AccountActivationView(View):
 
         except Exception as e:
             messages.error(request, "e")
+
+class AccountPasswordResetView(View):
+    def get(self, request):
+        pass
+
+    def post(self, request):
+        pass
+
 
 
 class LogoutView(auth_views.LogoutView):
