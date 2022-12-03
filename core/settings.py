@@ -1,10 +1,14 @@
-from logging import INFO
 import os
 from pathlib import Path
 from django.contrib import messages
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+#load environment variables
+load_dotenv(os.path.join(BASE_DIR, ".env"))
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -12,7 +16,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-%o2kvbgss&wp^x$_(_y46flfd=bvdzyia1a108$h#t&+%1eu$9'
-SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+# SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 
@@ -196,6 +201,8 @@ LOGGING = {
             '()': 'django.utils.log.RequireDebugTrue',
         },
     },
+
+
     'handlers': {
         'console': {
             'level': 'INFO',
@@ -203,11 +210,13 @@ LOGGING = {
             'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
+
         'mail_admins': {
             'level': 'ERROR',
             'class': 'django.utils.log.AdminEmailHandler',
             'filters': ['require_debug_true']
         },
+
         'file': {
             'level': 'ERROR',
             'class': 'logging.FileHandler',
@@ -223,18 +232,21 @@ LOGGING = {
             'level': 'INFO',
             'propagate': True,
         },
+
         'django.request': {
             'handlers': ['console'],
             'level': 'INFO',
             'propagate': True,
 
         },
+
         'django.server': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
 
         },
+        
         'modernman_final.custom': {
             'handlers': ['file'],
             'level': 'ERROR',
@@ -273,8 +285,16 @@ SESSION_COOKIE_SECURE = True
 
 # Deployment: Update database configuration from $DATABASE_URL.
 import dj_database_url
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+DATABASES = {
+    "default": dj_database_url.config(
+        default=DATABASE_URL, 
+        conn_max_age=1800
+        ),
+    }
+
 
 
 
