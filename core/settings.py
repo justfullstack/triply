@@ -15,17 +15,18 @@ load_dotenv(os.path.join(BASE_DIR, ".env"))
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'django-insecure-%o2kvbgss&wp^x$_(_y46flfd=bvdzyia1a108$h#t&+%1eu$9'
+SECRET_KEY = 'django-insecure-%o2kvbgss&wp^x$_(_y46flfd=bvdzyia1a108$h#t&+%1eu$9'
 # SECRET_KEY = os.environ.get('SECRET_KEY', 'cg#p$g+j9tax!#a3cup@1$8obt2_+&k3q+pmu)5%asj6yjpkag')
-SECRET_KEY = os.getenv("SECRET_KEY")
+# SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = os.environ.get('DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["*.up.railway.app", "127.0.0.1"]
 
 
 # Application definition
@@ -134,6 +135,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # The URL to use when referring to static files (where they will be served from)
 # STATIC_URL = '/static/'
+
+# Deployment: Compressed Simplified static file serving using whitenoise.
+# https://pypi.org/project/whitenoise/
+# reduce the size of the static files when they are served
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # user-uploaded data saved here
@@ -246,7 +252,7 @@ LOGGING = {
             'propagate': False,
 
         },
-        
+
         'modernman_final.custom': {
             'handlers': ['file'],
             'level': 'ERROR',
@@ -259,7 +265,7 @@ LOGGING = {
 }
 
 
-DJANGO_LOG_LEVEL = INFO
+# DJANGO_LOG_LEVEL = INFO
 
 
 # custom auth model
@@ -271,10 +277,6 @@ AUTH_USER_MODEL = "authentication.CustomUser"
 # django_heroku.settings(locals())
 
 
-# Deployment: Compressed Simplified static file serving using whitenoise.
-# https://pypi.org/project/whitenoise/
-# reduce the size of the static files when they are served
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 
@@ -286,22 +288,22 @@ SESSION_COOKIE_SECURE = True
 # Deployment: Update database configuration from $DATABASE_URL.
 import dj_database_url
 
-DATABASE_URL = os.getenv("DATABASE_URL")
+if not DEBUG:
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL, 
+            conn_max_age=1800
+            ),
+        }
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=DATABASE_URL, 
-        conn_max_age=1800
-        ),
-    }
 
-
+    DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 
 
 
 # During development/for this tutorial you can instead set just the base URL
-CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*' ] 
+# CSRF_TRUSTED_ORIGINS = ['http://*', 'https://*' ] 
 
 

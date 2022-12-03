@@ -1,2 +1,2 @@
-web: python manage.py migrate &&  gunicorn triply.wsgi
+web: gunicorn triply.wsgi
 
