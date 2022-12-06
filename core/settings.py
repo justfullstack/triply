@@ -22,8 +22,8 @@ SECRET_KEY = 'django-insecure-%o2kvbgss&wp^x$_(_y46flfd=bvdzyia1a108$h#t&+%1eu$9
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.environ.get('DEBUG', '') != 'False'
+DEBUG = True
+# DEBUG = os.environ.get('DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ["*"]
 # ALLOWED_HOSTS = ["*.up.railway.app", "127.0.0.1"]
@@ -79,16 +79,16 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-if DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "triply",
-            "USER": "postgres",
-            "PASSWORD": "sweetpoison",
-            "HOST": "localhost"
-        }
-    }
+# if DEBUG:
+#     DATABASES = {
+#         "default": {
+#             "ENGINE": "django.db.backends.postgresql",
+#             "NAME": "triply",
+#             "USER": "postgres",
+#             "PASSWORD": "sweetpoison",
+#             "HOST": "localhost"
+#         }
+#     }
 
 
 # Password validation
@@ -288,8 +288,7 @@ SESSION_COOKIE_SECURE = True
 # Deployment: Update database configuration from $DATABASE_URL.
 import dj_database_url
 
-if not DEBUG:
-    DATABASES = {
+DATABASES = {
         "default": dj_database_url.config(
             default=DATABASE_URL, 
             conn_max_age=1800
@@ -297,7 +296,18 @@ if not DEBUG:
         }
 
 
-    DATABASE_URL = os.getenv("DATABASE_URL")
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+# if not DEBUG:
+#     DATABASES = {
+#         "default": dj_database_url.config(
+#             default=DATABASE_URL, 
+#             conn_max_age=1800
+#             ),
+#         }
+
+
+#     DATABASE_URL = os.getenv("DATABASE_URL")
 
 
 

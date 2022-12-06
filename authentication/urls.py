@@ -44,7 +44,7 @@ urlpatterns = [
 
 
     path(
-        'activate/<uidb64>/<token>/',
+        'reset-password/<uidb64>/<token>/',
         views.AccountPasswordResetView.as_view(),
         name='reset-password'
     ),
