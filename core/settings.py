@@ -296,7 +296,8 @@ DATABASES = {
         }
 
 
-DATABASE_URL = os.getenv("DATABASE_URL") 
+# DATABASE_URL = os.getenv("DATABASE_URL") 
+SECRET_KEY = os.environ.get('DATABASE_URL', '')
 
 
 DATABASES = {
