@@ -1,0 +1,336 @@
+{% extends "base.html"  %}
+{% load static  %}
+
+
+ 
+{% block title %}
+    Trippy | {{ group.name }}
+{% endblock  %}
+ 
+
+
+{% block style %}
+
+    .round-img{
+        border-radius: 50%;
+    }
+
+    .group-pre-content{
+        height: 70vh;
+    }
+
+    .group-cover{
+     height: 50vh;  
+    }
+
+    .group-cover img{
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .group-avatar{
+        
+        height: 13em;
+        width: 13em;
+        transform: translate(2em, -5.3rem);
+        
+    }
+
+    .group-avatar img{
+        height: 100%;
+        width: 100%;
+        object-fit: contain;
+        background: #fff;
+        border: 13px solid rgba(255, 84, 0, 0.7);
+        border-radius: 0 2rem 0 2rem;
+    }
+
+    .group-data{
+        padding-left: 2rem;
+        padding-right: 1rem;
+    }
+
+    .group-name-type .group-name{
+        color: rgb(255, 94, 0);
+        font-weight: 600;
+        font-size: 2rem;
+    }
+
+
+    .group-name-type .group-type{ 
+        font-weight: 100;
+        font-size: 0.8rem;
+        font-style: italic;
+        color: green;
+    }
+
+    .group-members-count{
+        color: gray;
+        font-weight: 300;
+    }
+
+    .leave-btn{
+        background: crimson;
+    }
+
+    .join-btn{
+        background: green;
+    }
+
+    .group .group-nav .nav-item .nav-link{
+        font-weight: 500;
+    }
+
+    .group-nav{ 
+        flex-wrap: no-wrap;
+        transform: translateY(-7.4rem);
+    }
+
+    .group-admin-actions{
+        display: flex;
+        /*border: 1px solid yellow;*/
+        transform: translateY(-20rem);
+        justify-content: flex-end;
+        color: #fff;
+        font-weight: 800;
+        font-size: 1.7rem;
+        cursor: pointer;
+    }
+
+    /* panes */
+    .pane{
+        border-radius: 5px;
+    }
+
+
+
+
+    /* right pane */
+
+    .group-member{
+
+        border: 1px solid rgb(255, 94, 0);
+        border-radius: 5px;
+
+    }
+
+    
+    
+{% endblock  %}
+
+
+{% block pre-content %}
+    <div class="group-pre-content bg-white">
+        <div class="group-cover">
+            <img src="{{ group.cover.url }}" alt="">
+
+
+            {%  if request.user == group.created_by %}
+                <div class="change-cover" > 
+                    <a href="{% url 'groups:change-group-cover' group.slug %}" class="w-100 text-center" title="Change Cover">
+                        <i class="fa fa-plus w-60 "></i>
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="group-profile-data d-flex justify-content  align-items-start   w-100">
+            <div class="group-avatar  mx-3">
+                <img src="{{ group.avatar.url }}" alt="">
+
+                {%  if request.user == group.created_by %}
+                    <div class="change-avatar" > 
+                        <a href="{% url 'groups:change-group-avatar' group.slug %}" class="w-100 text-center" title="Change Avatar">
+                            <i class="fa fa-plus w-60 h1"></i>
+                        </a>
+                    </div> 
+                {% endif %}
+            </div>
+            <div class="group-data d-flex justify-content align-items-center w-100">
+                <div class="group-name-type flex-column justify-content-center align-items-center ">
+                    <div class="group-name">
+                        {{ group.name }}
+                    </div>
+                    <div class="group-type">
+                        {{ group.type }}
+                    </div>
+                </div>
+
+                <div class="group-members-count ">
+                    {{ group.members.all.count }} members
+                </div>
+
+                <div class="group-actions-links ">
+                    {% if request.user in group.members.all %} 
+                        <a href="{% url 'groups:exit-group' group.slug  %}" class="btn leave-btn px-5">Leave</a>
+                    {% else %} 
+                        <a href="{% url 'groups:join-group' group.slug  %}" class="btn join-btn px-5">Join</a>
+                    {% endif %} 
+                </div>
+
+            </div>
+
+            
+        </div>
+
+        <ul class=" group-nav d-flex justify-content-end list-style-none">
+            
+            <li class="nav-item">
+                <a href="#" class="nav-link text-gray  text-hover-orange  ">About</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-gray  text-hover-orange  ">Timeline</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-gray  text-hover-orange  ">Photos</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-gray  text-hover-orange ">Videos</a>
+            </li> 
+
+            
+        </ul>
+
+
+        <!-- group admin actions  -->
+        {% if user == group.created_by %}
+                
+                <div class="dropdown group-admin-actions"  >
+                    <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" id="dropdownMenu1" title="Group settings"> 
+                       <i class="fa fa-cogs  text-hover-orange" ></i> 
+                    </a> 
+                     
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in px-2" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation" class="flex-column justify-content-center align-items-start">
+                            <a role="menuitem" tabindex="-1" href="{% url 'groups:edit-group' group.slug %}" class="w-100 text-decoration-none text-gray text-hover-orange border-bottom" title="Edit Group">
+                                <i class="fas fa-pen fa-fw text-gray text-hover-orange"></i> <span class="text-gray text-hover-orange">Edit</span> 
+                            </a>
+                            <a role="menuitem" tabindex="-2" href="{%  url 'groups:delete-group' group.slug  %}" class="w-100 text-decoration-none text-gray text-hover-orange border-bottom" title="Delete Group">
+                                <i class="fas fa-trash fa-fw text-gray text-hover-orange"></i> <span class="text-gray text-hover-orange">Delete</span> 
+                            </a>
+                            <a role="menuitem" tabindex="-3" href="#" class="w-100 text-decoration-none text-gray text-hover-orange border-bottom" title="">
+                                <i class="fas fa-share fa-fw text-gray text-hover-orange"></i> <span class="text-gray text-hover-orange">Share</span> 
+                            </a>
+
+                        </li>
+                            
+                    </ul>
+                </div>
+            {% endif %} 
+    </div>
+{% endblock  %}
+
+
+
+
+
+
+{% block left %}
+    <div class="pane bg-white py-5 px-2 ">
+        <h3 class="text-gray text-start border-bottom fw-600 pb-2">
+            About
+        </h3>
+        
+
+        <div class="fw-300 text-gray text-start px-2">
+            {{ group.about }}
+        </div>
+
+    </div>
+{% endblock %}
+
+
+
+{% block main %} 
+    <div class="pane py-1 px-3 br-5">
+
+        <div class="new-postbox mb-5  bg-white " style="border-radius: 5px;">
+            {% if user.is_authenticated  %}
+                
+                {% include 'partials/forms/_new_post_form.html'   %}
+                
+            {% endif %}
+        </div>
+
+        <div class="post-list  bg-white  ">
+            <h3 class="text-gray text-start border-bottom fw-600 pl-3 mb-3 py-5 pb-0">
+                NewsFeed
+            </h3>
+
+            {% for post in  posts %}
+                <div class=" mb-3 bg-gray px-4 pb-5 bg-white"> 
+                    <div class="post bg-white">
+                        {% include 'partials/_group_post.html'  %} 
+                    </div>
+                </div>
+            {% endfor  %}
+
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block right %}
+    <div class="create-your-own-group d-flex justify-content-center align-items-center mb-3">
+        <a href="{% url 'groups:create-group' %}" class="btn btn-block fw-300 mx-5">Create Group <i class="fa fa-plus  fw-300"></i> </a>
+    </div>
+    <div class="pane bg-white py-5 px-3">
+        <h3 class="text-gray text-start border-bottom fw-600 mb-2">
+            Top members
+        </h3> 
+        
+        {% for member in group.members.all %}
+            {% if member == group.created_by %}
+                <div class="group-member d-flex py-2 px-1 justify-content  align-items-center flex-no-wrap mb-3">
+                    <div class="post-avatar-container mr-2">
+                        <img src="{{ member.avatar.url }}" alt="" class="round-img border">
+                    </div>
+
+                    <div class="text-success text-center m-0">
+                        <em style="font-size:  1rem ;">admin</em>
+                    </div>
+                    
+
+
+                    
+                    <div class="flex-column justify-content-center align-items-center">
+                        <div class="m-0">
+                            <h6 class="m-0 text-orange fw-700">@{{ member.username }}</h6>
+                            <div class="w-100 d-flex  justify-content-center ">
+                                <a href="{% url 'profiles:follow-user' member.slug  %}" class="text-success text-center">Follow +</a>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            {% endif  %}
+
+            {% if member != group.created_by %}
+                <div class="group-member d-flex py-2 px-1 mb-3  justify-content  align-items-center flex-no-wrap">
+                    <div class="post-avatar-container mr-2">
+                        <img src="{{ member.avatar.url }}" alt="" class="round-img border">
+                    </div>
+                    <div class=" d-flex flex-column justify-content-center align-items-center ">
+                        <div class="m-0  justify-content-center align-items-center ">
+                            <div>
+                                <h6 class="m-0 text-orange fw-700">@{{ member.username }}</h6>
+                            </div>
+                            <div class="w-100 d-flex  justify-content-center ">
+                                <a href="{% url 'profiles:follow-user' member.slug  %}" class="text-success text-center">Follow +</a>
+                            </div>
+                        </div> 
+                    </div> 
+                </div>
+            {% endif  %}
+        {% endfor  %}
+    </div>
+{% endblock %}
+
+
+
+{% block js %}
+    <script src="{% static 'js/slider.js' %}"></script>
+{% endblock %}
+

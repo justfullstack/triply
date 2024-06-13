@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+
+{% block title %}
+    Triply | Edit {{ group.name }}
+{% endblock   %}
+
+
+
+{% block style %}
+
+{% endblock   %}
+
+
+
+
+{% block main %}
+    <div class="container-fluid">
+        <div class="row bg-white br-5 py-3 px-2">
+                <div class="section__heading text-orange fw-600 text-center h4 border-bottom pb-1 my-3">
+                    Update {{ group.name }}
+                </div>
+
+
+                <form method="POST"  enctype="multipart/form-data"  action="{% url 'groups:edit-group' group.slug %}" class="form" > {% csrf_token %}
+                    <div class="form-group">
+                        <label for="group_name">Group Name:</label>
+                        <input type="text" name="name" value="{{  group.name  }}" maxlength="255" required="" id="id_name" placeholder="New group name..." class="form-control border br-5 px-3 py-2 ">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group_name">About:</label>
+                        <textarea name="about" cols="40" rows="10" id="id_about" class="form-control border br-5 px-3 py-2 " placeholder="New group description..." style="height: 6rem;">
+                            {{  group.about  }}
+                        </textarea>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="group_type">Group Type:</label>
+                        <select name="type" id="id_type" class="border br-5"> 
+
+                            <option value="Public" selected="">Public</option>
+
+                            <option value="Private">Private</option>
+
+                        </select>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="id_avatar">New Avatar:</label> 
+                        <input type="file" name="avatar" accept="image/*" id="id_avatar">
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="id_avatar">New Cover Photo:</label> 
+                        <input type="file" name="cover" accept="image/*" id="id_cover">
+                    </div>
+
+
+                    <div class="form-group">
+                        
+                    </div>
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary title px-5 py-1 mb-5 fw-300 w-80">Update Group <i class="fas fa-plus"></i> </button>
+                    </div>
+                </form> 
+        </div>
+    </div>
+{% endblock   %}
+
+ 
+
+  
+

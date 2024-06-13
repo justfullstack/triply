@@ -1,0 +1,88 @@
+{% load static %}
+<!-- 
+<div class="navbar bg-white py-1 shadow">
+    <div class="navbar">
+        <div class="navbar-brand">
+            <a href="{% url 'home' %}" class="navbar-brand text-decoration-none" style="font-size: 2.4em;">
+                Triply
+            </a>
+        </div>
+    </div>
+</div>  -->
+
+
+<!-- start navbar section -->
+<nav class=" navbar bg-white shadow ">
+    <div class="container-fluid"> 
+
+        <!--logo------------------->
+        <a href="index.html" class="navbar-brand " >
+            Movienymous<span>.hd</span>
+        </a>
+
+        <!-- toggler -->
+        
+        <button class="navbar-toggler" type="button">
+            <span class="nav-toggler-icon"></span>
+        </button>
+
+        <!--menu------------------->
+        <ul class=" navbar-nav collapse collapse-md ">
+            <li class="nav-item">
+                <a href="#"  class="nav-link">
+                    Home
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#"  class="nav-link">
+                    Genre
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#"  class="nav-link">
+                    TV Shows
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#"  class="nav-link">
+                    Movies
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#"  class="nav-link">
+                    Contact
+                </a>
+            </li>
+        </ul>
+
+
+        <!--Search-box------------->
+        <form action="" class="nav-item form iform-inline search search-box " id="mainSearchForm">
+            <!--input-->
+            <input 
+                type="text" 
+                name="search-movie" 
+                placeholder="Search Movie..." 
+                class="search-input"   
+                list="search__suggestions"   
+                required/>
+
+            <!--btn-->
+            <button type="submit">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+
+        <!----     Suggestions Datalist     --------->
+        <datalist id="search__suggestions" class="border">
+            <option value="Deadpool 2"></option> 
+            <option value="No Time to Die"></option> 
+        </datalist>
+    </div>
+
+</nav>
+<!-- end navbar section -->

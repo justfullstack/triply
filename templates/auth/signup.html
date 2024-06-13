@@ -1,0 +1,173 @@
+{% extends 'auth/base_auth.html' %}
+{% load static %}
+
+
+
+{%   block  title  %}
+	Triply | Sign Up
+{%  endblock    %}
+
+ 
+
+{%   block  style  %}
+		
+	@media(max-width: 700px){
+		body{
+			background: #fff;
+		}
+
+		form{
+			width: 100%;
+		}
+	}
+{%  endblock    %}
+
+
+
+
+{% block content %}
+
+	<div class="container-fluid ">
+		<div class="row justify-content-center m-3">
+
+			<form  class=" bg-white form container border col-sm-11 col-md-9 col-lg-7 px-5 py-2 my-4  shadow" method="POST">{% csrf_token %}
+				<h1 class="text-center mt-5"  style="font-weight: 200;">
+					Join <span style="font-weight: 800; ">Triply</span> 
+				</h1>
+
+				<hr>
+				<!-- messages -->
+				
+
+				<!-- non-field errors -->
+				{% if form.none_field_errors %}
+					{% for error in  form.none_field_errors %}
+						<div class="alert alert-danger  text-center list-style-none ">
+							<a href="#" class="close" data-dismiss="alert">
+								&times;
+							</a> 
+							{{ error.message }}
+						</div>
+					{% endfor %}
+				{% endif %}
+
+				<!-- first & last names -->
+				<div class="form-group ">
+					<input type="text" name="first_name"   maxlength="20" class="form-control  mb-2  " placeholder="First Name..." id="id_first_name">
+					
+					<div class="col"></div>
+
+					<input type="text" name="last_name" maxlength="20" class="form-control " placeholder="Last Name..." id="id_last_name">
+
+					{% if form.first_name.errors %}
+						{% for error in  form.first_name.errors %}
+							<div class="alert alert-danger  text-center list-style-none col-12">
+								<a href="#" class="close" data-dismiss="alert">
+									&times;
+								</a> 
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% endif %}
+
+					{% if form.last_name.errors %}
+						{% for error in form.last_name.errors %}
+							<div class="alert alert-danger  text-center list-style-none col-12">
+								<a href="#" class="close" data-dismiss="alert">
+									&times;
+								</a> 
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% endif %}
+
+				</div>
+
+				<!-- username -->
+				<div class="form-group">
+					<input type="text" name="username"  maxlength="50" class="form-control {% if form.username.errors %} is-invalid {% endif  %}" placeholder="Username..." id="id_username">
+
+					{% if form.username.errors %}
+						{% for error in  form.username.errors %}
+							<div class="alert alert-danger  text-center list-style-none   py-1 mt-2 ">
+								<a href="#" class="close" data-dismiss="alert">
+									&times;
+								</a> 
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% endif %}
+
+				</div>
+
+				<!-- email -->
+				<div class="form-group">
+					<input type="email" name="email"   maxlength="20" class="form-control {% if form.email.errors %} is-invalid {% endif  %}" placeholder="Enter a valid email.." id="id_email">
+
+					{% if form.email.errors %}
+						{% for error in  form.email.errors %}
+							<div class="alert alert-danger  text-center list-style-none  py-1 mt-2">
+								<a href="#" class="close" data-dismiss="alert">
+									&times;
+								</a> 
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% endif %}
+
+				</div>
+
+
+				<div class="form-group row">
+					<input type="password" name="password1" maxlength="60" minlength="8" class="form-control mb-2 {% if form.password1.errors %} is-invalid {% endif  %}" placeholder="Password..." id="id_password1">
+      
+      				<input type="password" name="password2" maxlength="60" minlength="8" class="form-control {% if form.password2.errors %} is-invalid {% endif  %} " placeholder="Repeat Password" id="id_password2">
+
+					{% if form.password2.errors %}
+						{% for error in  form.password2.errors %}
+							<div class="alert alert-danger  text-center list-style-none   py-1 mt-2 ">
+								<a href="#" class="close" data-dismiss="alert">
+									&times;
+								</a> 
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% endif %}
+
+					{% if form.password2.errors %}
+						{% for error in  form.password2.errors %}
+							<div class="alert alert-danger  text-center list-style-none   py-1 mt-2 ">
+								<a href="#" class="close" data-dismiss="alert">
+									&times;
+								</a> 
+								{{ error }}
+							</div>
+						{% endfor %}
+					{% endif %}
+
+				</div> 
+
+
+				<div class=" row form-group mt-3 justify-content-center">
+					<button type="submit"  class="col-9 btn btn-primary btn-block  submit__btn text-transform-capitalize">
+						Sign Up
+					</button> 
+				</div>
+
+	
+				<div class="row mb-3">
+					<h6 class="text-dark mt-3 text-center">
+						Already have an account? <a href="{% url 'users:login' %}">Log In</a>.
+					</h6>                 
+				</div>
+			</form>
+		</div>
+	</div>
+{% endblock %}
+ 
+ 
+<!-- custom JS -->
+{%   block  js  %}
+	<script src="{% static 'js/register.js' %}"></script>
+{%  endblock    %}
+  

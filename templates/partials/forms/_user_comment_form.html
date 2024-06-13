@@ -1,0 +1,10 @@
+{% load static %} 
+
+<form class="form m-0 new__comment--form w-80"  method="POST"> {% csrf_token %}
+    <div class="form-group m-0 pe-2">
+        <textarea name="body" cols="40" rows="10" maxlength="200" id="id_body" placeholder="{% if comments.count > 0 %} Your comment...{%  else %} Be the first to comment on this post...{% endif %}" class=" w-100"></textarea>
+        
+        
+    </div> 
+    <button type="submit" class="btn btn-primary ml-auto title  fw-300">Comment</button>
+</form>

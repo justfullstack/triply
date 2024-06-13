@@ -1,0 +1,55 @@
+{% load static %}
+
+<div class="widget">
+    <h4 class="widget-title text-gray text-start border-bottom py-2 px-4">Shortcuts</h4>
+    <ul class="naves list-style-none">
+        <li class="pb-2">
+            <i class="fa fa-clipboard text-gray text-hover-orange "></i>
+            <a href="#" title="" class="text-gray text-hover-orange text-decoration-none">News feed</a>
+        </li>
+        <li class="pb-2">
+            <i class="fas fa-mouse text-gray text-hover-orange "></i>
+            <a href="inbox.html" title="" class="text-gray text-hover-orange text-decoration-none">Inbox</a>
+        </li>
+        <li class="pb-2">
+            <i class="fas fa-file text-gray text-hover-orange "></i>
+            <a href="page.html" title="" class="text-gray text-hover-orange text-decoration-none">My pages</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-user text-gray text-hover-orange "></i>
+            <a href="friends-list.html" title="" class="text-gray text-hover-orange text-decoration-none">friends</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-image text-gray text-hover-orange "></i>
+            <a href="images.html" title="" class="text-gray text-hover-orange text-decoration-none">images</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-video-camera text-gray text-hover-orange "></i>
+            <a href="videos.html" title="" class="text-gray text-hover-orange text-decoration-none">videos</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-comments  text-gray text-hover-orange "></i>
+            <a href="inbox.html" title="" class="text-gray text-hover-orange text-decoration-none">Messages</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-share text-gray text-hover-orange "></i>
+            <a href="location.html" title="" class="text-gray text-hover-orange text-decoration-none">People Nearby</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-bar-chart-o text-gray text-hover-orange "></i>
+            <a href="insight.html" title="" class="text-gray text-hover-orange text-decoration-none">insights</a>
+        </li>
+        <li class="pb-2">
+            <i class="fas fa-lock text-gray text-hover-orange "></i>
+            <a href="login.html" title="" class="text-gray text-hover-orange text-decoration-none">Login</a>
+        </li>
+        <li class="pb-2">
+            <i class="fas fa-user-circle text-gray text-hover-orange "></i>
+            <a href="{% url 'users:signup' %}" title="" class="text-gray text-hover-orange text-decoration-none" title="Sign Up">Signup</a>
+        </li>
+        <li class="pb-2">
+            <i class="fa fa-power-off text-gray text-hover-orange "></i>
+            <a href="{% url 'users:login' %}" title="" class="text-gray text-hover-orange text-decoration-none">Logout</a>
+        </li>
+    </ul>
+</div>

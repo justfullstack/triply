@@ -1,0 +1,22 @@
+{% load static %}
+
+<div class="widget"> 
+    <h4 class="widget-title text-gray text-start border-bottom py-2 px-4">Followers</h4> 
+    {% for follower in user.followers.all %}
+        <div class="group-member d-flex py-2 px-3 justify-content  align-items-center flex-no-wrap mb-3">
+            <div class="post-avatar-container mr-2 round-img">
+                <img src="{{ follower.avatar.url }}" alt="" class="round-img border">
+            </div>
+ 
+            
+            <div class="flex-column justify-content-center align-items-center">
+                <div class="m-0">
+                    <h6 class="m-0 text-orange fw-700">@{{ follower.username }}</h6>
+                    <div class="w-100 d-flex  justify-content-center ">
+                        <a href="#" class="text-success text-center">Follow +</a>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    {% endfor %}
+</div>

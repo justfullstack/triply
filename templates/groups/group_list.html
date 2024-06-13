@@ -1,0 +1,131 @@
+{% extends "base.html"  %}
+{% load static  %}
+
+
+ 
+{% block title %}
+    Trippy | Groups
+{% endblock  %}
+
+
+{% block style %} 
+    .round-img{
+        border-radius: 50%;
+        
+    }
+
+    .post-avatar-container > img{
+        object-fit: cover;
+    }
+
+    .left-pane, .right-pane{ 
+        display: none;
+    }
+
+    .main-pane{
+        width: 100%;
+        
+    }
+
+    .groups{
+        border-radius: 5px;
+        border: 1px solid rgb(255, 94, 0);
+    }
+
+    .groups .group{
+        border: 1px solid rgb(255, 94, 0);
+        border-radius: 5px;
+    }
+
+    .justify-content{
+        justify-content: space-between;
+    }
+
+    .footer{
+        position: absolute;
+        bottom: 0;
+    }
+
+    .footer{
+        position: relative;
+    }
+
+    .groups{
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+
+
+    @media(max-width: 500px){
+        .group{
+            flex-direction: column;
+            box-shadow: 1px 1px 3px #000;
+        }
+    }
+
+{% endblock  %}
+
+
+
+{% block main %} 
+    <div class="container-fluid d-flex  mx-auto"> 
+            <div class=" row groups bg-white px-3 py-5 my-5  mt-0 shadow w-100">
+                <h3>
+                    <i class="fa fa-users fa-fw"></i> Groups
+                </h3>
+                {% for group in groups %} 
+                
+                    <div class=" group d-flex justify-content py-2 px-2  mb-3  align-items-center border br-5 ">
+                        <div class="  d-flex justify-content-start gap-3 col-lg-5 col-sm-6 col-xs-11">
+                            <div>
+                                <a href="{{ group.get_absolute_url }}">
+                                    <div class="group-avatar post-avatar-container">
+                                        <img src="{{ group.avatar.url }}" alt="" class="round-img border">
+
+                                        {% if request.user == group.created_by %}
+                                            <div class="change-avatar-round border" > 
+                                                <a href="{% url 'groups:change-group-avatar' group.slug %}" class="w-100 text-center" title="Change Avatar">
+                                                    <i class="fa fa-plus w-60 h1"></i>
+                                                </a>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+
+
+                                    
+                                </a>
+                            </div>
+
+                            <div class="d-flex flex-column justify-content-start align-items-start gap-1">
+                                
+                                <div class="text-orange fw-600">
+                                    <a href="{{ group.get_absolute_url }}" class="text-decoration-none">
+                                        {{ group.name }}
+                                    </a>
+                                </div>
+
+
+                                <small class=" {% if group.type == 'Public' %} text-success {% else  %} text-orange {% endif %}">{{ group.type }}</small>  
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-center text-gray">
+                            {{ group.members.all.count }} members
+                        </div>
+
+                        <div>
+                            {% if  user in group.members.all %}  
+                                <a href="{% url 'groups:join-group' group.slug   %}" class="btn bg-success px-5 ">
+                                    Join <i class="fa fa-plus"></i>
+                                </a>
+                            {% else  %}
+                                <a href="{% url 'groups:exit-group' group.slug   %}" class="btn bg-danger px-5">
+                                    Leave <i class="fa fa-times"></i>
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div> 
+                {% endfor  %}
+            </div> 
+    </div>
+{% endblock  %}

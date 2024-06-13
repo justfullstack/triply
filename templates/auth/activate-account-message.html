@@ -1,0 +1,27 @@
+{% extends 'auth/base_auth.html' %}
+
+{% block style %}
+    .message{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 80vh;
+    }
+
+    p{
+        display: block;
+        margin: 0 auto; 
+        align-self: center;
+        font-size: 1.5rem;
+        border: 1px solid;
+    }
+
+{% endblock %}
+
+{% block content %}
+    <div class="message ">
+        <p class=" col-10 alert alert-info my-5 shadow py-3 px-3 ">
+            We sent an activation link to the email you provided during signup. Please use it to verify your account. You only need to do this once.
+        </p> 
+    </div>
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+    Triply | create New Group
+{% endblock   %}
+
+
+{% block style %}
+
+    /*
+    .left-pane, .right-pane{
+        display:none;
+    }
+
+     
+
+    .main-pane{ 
+        width: 70%;
+    }
+
+    form textarea{
+        height: 5rem;
+    }
+
+    select{
+        color: gray;
+    }
+
+    @media(max-width:900px){
+        .main-pane{ 
+            width: 80%;
+        }
+    }
+
+
+    @media(max-width:600px){
+        .main-pane{ 
+            width: 70%;
+        }
+
+        .images{
+            display: flex;
+            flex-direction: column;
+            justify-content:center;
+        }
+    }
+
+    @media(max-width:400px){
+        .main-pane{ 
+            width: 90%;
+        }
+    }
+
+    @media(max-width:300px){
+        .main-pane{ 
+            width: 95%;
+        }
+    }
+
+    */
+{% endblock %}
+
+{% block main %}
+    <div class="container-fluid justify-content-center align-item-center ">
+        <div class="row">
+            <div class=" bg-white br-5  border  shadow">
+                <div class="section__heading text-orange fw-600 text-center h4 border-bottom pb-1 my-3">
+                    Create Group
+                </div>
+                
+                <form enctype="multipart/form-data" class="form m-0 px-4" method="POST" action="{% url 'groups:create-group' %}">{% csrf_token %} 
+
+                    <div class="from-group">
+                        <input type="text" name="name" maxlength="255" required="" id="id_name" class="form-control" placeholder="A name for your group...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="group_type">Group Type:</label>
+                        <select name="type" id="id_type" class="border "> 
+
+                            <option value="Public" selected="">Public</option>
+
+                            <option value="Private">Private</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <textarea class="border br-5 px-3 py-3" name="about" cols="40" rows="10" id="id_about" placeholder="Briefly describe the group..."></textarea>
+                    </div>
+
+                    <div class="form-group images">
+                        <div class="col-lg-6 col-md-6 col-sm-12 mb-2">
+                            <label for="group_avatar">Profile Picture:</label>
+                            <input type="file" name="avatar" accept="image/*" id="id_avatar">
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-12  ">
+                            <label for="group_avatar">Cover Photo:</label>
+                        <input type="file" name="cover" accept="image/*" id="id_cover">
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-primary title px-5 py-1 mb-5 fw-300 w-80">Create Group <i class="fas fa-plus"></i> </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+ 
+
+     

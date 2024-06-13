@@ -1,0 +1,24 @@
+{% extends "base.html"  %}
+{% load static  %}
+
+{% block title %}
+    Trippy | Edit post
+     
+{% endblock %}
+
+
+{% block style %}   
+{% endblock %}
+
+ 
+
+{% block main  %}
+    <form  method="post" class="form bg-white border px-3  pb-5">{% csrf_token %}
+        <div class="form-group">
+            <textarea name="text" cols="40" rows="10" maxlength="1000" id="id_text" placeholder="Enter new post caption..." class="form-control edit-post-textarea border px-2 py-3"  >{{ post.text }}</textarea>
+        </div>
+        <div class="d-flex justify-content-end">
+            <button type="submit"  class="btn btn-primary ml-auto  capitalize">Save</button>
+        </div>
+    </form> 
+{% endblock %}

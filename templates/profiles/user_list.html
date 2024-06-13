@@ -1,0 +1,138 @@
+{% extends "base.html"  %}
+{% load static  %}
+
+
+ 
+{% block title %}
+    Trippy | Users
+{% endblock  %}
+
+
+{% block style %} 
+
+body{
+    background: #fff;
+}
+    .round-img{
+        border-radius: 50%;
+        
+    }
+
+    .post-avatar-container{
+        height: 8rem;
+        width: 8rem;
+        transform: translateY(-4rem);
+        
+    }
+
+    .post-avatar-container > img{
+        object-fit: contain;
+        border: 0.3rem solid #fff;
+
+    }
+ 
+
+    .main-pane{
+        width: 100%;
+        margin: 0 auto;
+        
+    }
+
+    .groups{
+        border-radius: 5px;
+    }
+
+    .groups .group{
+        border: 1px solid rgb(255, 94, 0);
+        border-radius: 5px;
+    }
+
+    .justify-content{
+        justify-content: space-between;
+    }
+
+    .px-auto{
+        padding: 0 auto;
+    }
+
+    .footer{
+        position: absolute;
+        bottom: 0;
+    }
+
+    .footer{
+        position: relative;
+    }
+
+{% endblock  %}
+
+
+
+{% block main %} 
+    <div class="container-fluid bg-white border br-5   py-5 justify-content-center align-items-center ">
+       <div class="row justify-content-start px-auto"> 
+            <h3 class="w-100 border-bottom py-3 ">
+                <i class="fa fa-users fa-fw text-orange"></i> <span class="text-gray fw-300">Users</span> 
+            </h3>
+            
+            <div class="container-fluid"> 
+                <div class="row gap-2  px-auto"> 
+                    {% for profile in profiles %} 
+                        {% if profile.user != request.user %}
+                            
+                            <div class=" col-lg-3  col-md-5 col-xs-12 card p-0 justify-content-center align-items-center shadow br-5 mb-2  "> 
+                                    <div class="cover-pic-container ">
+                                        <img src="{{ user.cover.url }}" alt="@{{user.username }}" class="w-100 br-5 ">
+                                    </div>   
+
+                                    <div class="post-avatar-container">
+                                        <a href="{% url 'profiles:user' profile.user.slug %}" class="text-decoration-none">
+                                            <img src="{{ profile.user.avatar.url }}" alt="@{{ profile.user.username }}" class="round-img bg-white "> 
+                                        </a>
+                                    </div>  
+
+                                    <div class="about-usr w-100 " style="margin-top: -3rem ;">
+                                        <div>
+                                            <div class="h3 fw-600 text-orange text-center ">
+                                                <a href="{% url 'profiles:user' profile.user.slug %}" class="text-decoration-none">
+                                                    @{{ profile.user.username }}
+                                                </a>
+                                            </div>
+                                            <div class="text-gray h4 text-center">
+                                                {% if profile.city is not None %}
+                                                    {{ profile.city }}, <b>{{ profile.country }}</b>
+                                                {% else %}
+                                                    Nairobi, <b>Kenya</b> 
+                                                {% endif  %}
+                                            </div> 
+                                        </div>
+
+                                        <div class="d-flex justify-content-center gap-4 my-1">
+                                            <div class="text-gray">
+                                                {{  profile.followers.count }} followers
+                                            </div>
+                                            <div class="text-gray">
+                                                {{  profile.following.count }} following
+                                            </div>
+                                        </div>
+                                    </div>  
+                                    <div class="action-links mb-3">
+                                        {% if profile.user not in current_profile.following.all %}
+                                            <a href="{% url 'profiles:follow-user' profile.user.slug %}" class="btn btn-block bg-success text-white text-hover-orange  ">Follow <i class="fa fa-plus"></i></a>
+                                        {% else %}
+                                            <a href="{% url 'profiles:unfollow-user' profile.user.slug %}" class="btn btn-block bg-danger text-white text-hover-orange">Unfollow <i class="fa fa-times"></i></a>
+                                        {% endif %}
+                                    </div> 
+                            
+
+
+                                
+                            </div>
+                        {% endif %}
+                    {% endfor %} 
+                </div>
+            </div>
+        </div> 
+    </div>
+{% endblock  %}
+

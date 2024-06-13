@@ -1,0 +1,217 @@
+{% extends "base.html"  %}
+{% load static  %}
+{% load date_formatter  %}
+
+
+ 
+{% block title %}
+    Trippy | Post by @{{ post.user.username }}
+{% endblock  %}
+
+
+{% block style %} 
+
+    .post-container{ 
+        width: 100%; 
+    }
+
+    .post{
+        margin: 0 auto; 
+        justify-self: center;
+    }
+
+
+    .mx-auto{
+        
+    }
+
+
+    .slider{
+        position: relative;
+        height: 22rem;
+    }
+
+    .slide{
+        position: absolute;
+        height: 100%;
+        width: 100%;
+    }
+
+    .slide img{
+        object-fit:cover;
+        height: 100%;
+        width: 100%;
+    }
+
+    .dots{
+        display: none;
+    }
+
+    .round-img{
+        border-radius: 50%;
+    }
+ 
+    .main-pane{
+        width: 100%;
+        margin: 0 auto;
+    }
+ 
+
+    @media(max-width: 600px){
+        .main-pane{
+            width: 80%;
+        }
+    }
+
+    @media(max-width: 400px){
+        .main-pane{
+            width: 90%;
+        }
+    }
+{% endblock  %}
+
+ 
+
+{% block left %}
+     
+{% endblock  %}
+
+
+
+
+{% block main %} 
+    <div class=" post-container  ">
+        <div class="post-detail post px-3 py-3 mx-auto  my-4  shadow w-100 ">
+    
+            <div class=" post-profile d-flex justify-content align-items-center w-100 mb-2 ">
+                <div class="d-flex  align-items-center">  
+                    <div class="post-avatar-container mr-3 my-3 ">
+                        <img src="{{ post.user.avatar.url }}" alt="" class=" round-img post-avatar  mx-2 border bg-white">
+                    </div>
+                
+                    <div class=" inline flex-column">
+                        <h3 class=" text-orange fw-600">@{{ post.user.username }}</h3> 
+                        <small class="text-gray text-start"  >{{ post.date_created|date_formatter }}</small>
+                    </div>
+                </div>
+                <div > 
+                    {% if post.user == request.user %}
+                        <div class="dropdown">
+                            <a class="dropdown-toggle no-arrow nav-link" aria-expanded="false" data-bs-toggle="dropdown" id="dropdownMenu1"> 
+                                <div class="options">
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </a>  
+
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in px-2" role="menu" aria-labelledby="dropdownMenu1">
+                                <li role="presentation" class="flex-column">
+                                    <a role="menuitem" tabindex="-1" href="{% url 'posts:edit-post' post.slug %}" class="text-decoration-none text-gray text-hover-orange border-bottom">
+                                        <i class="fas fa-pen fa-fw text-gray text-hover-orange"></i> <span class="text-gray text-hover-orange">Edit</span> 
+                                    </a>
+                                    <a role="menuitem" tabindex="-1" href="{% url 'posts:delete-post' post.slug %}" class="text-decoration-none text-gray text-hover-orange border-bottom">
+                                        <i class="fas fa-trash fa-fw text-gray text-hover-orange"></i> <span class="text-gray text-hover-orange">Delete</span> 
+                                    </a>
+                                    <a role="menuitem" tabindex="-1" href="#" class="text-decoration-none text-gray text-hover-orange border-bottom">
+                                        <i class="fas fa-share fa-fw text-gray text-hover-orange"></i> <span class="text-gray text-hover-orange">Share</span> 
+                                    </a>
+
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        
+                    {% endif  %}
+                </div>
+
+            </div>
+
+            <div class="border post-container">
+                <div class="  text-gray  ">
+                    {% if post.image_set.all.count > 0  %} 
+                        <div class="slider m-0"> 
+                            {% for  image in post.image_set.all %}
+                                
+                                    <div class=" slide  mb-2 post-media    justify-content-center">
+                                        <a href="{{ post.get_absolute_url }}">
+                                            <img src="{{  image.image.url  }}" alt="" class="post-media-media">
+                                        </a>
+                                    </div> 
+                                
+                            {% endfor %} 
+
+                            {% if post.image_set.all.count > 1  %} 
+                                <div class="d-flex justify-content w-100 m-0 px-1 slider__buttons">
+                                    <div class="slider__btn  slider__btn--left px-2  mx-2">
+                                        &larr;  
+                                    </div>
+
+                                    <div class="slider__btn slider__btn--right  px-2   mx-2 ">
+                                        &rarr;
+                                    </div> 
+                                </div>  
+
+                                <div class="dots"></div>
+                            {% endif %}
+                        </div> 
+                    {% endif %}
+                        
+                    <a href="{{ post.get_absolute_url }}" class="text-decoration-none">
+                        <p class="post-text text-gray fw-400 px-2" style="color: rgb(144, 144, 144);">
+                            {{ post.text }}
+                        </p>
+                    </a>
+                    
+                </div>   
+
+                <div class="post-feedback">
+                    <ul class="list-style-none text-end d-flex  justify-content-end align-items-center ">
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a class="text-gray text-hover-orange  text-decoration-none">
+                                <i class="fa fa-eye  "></i> <span class="text-gray text-hover-orange">1.2k</span>
+                            </a> 
+                        </li>
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a href="{% url 'posts:post' post.slug %}" class="text-gray text-hover-orange  text-decoration-none">
+                                <i class="fas fa-comment"></i> <span class="text-gray text-hover-orange">{{ post.comment_set.count }}</span>
+                            </a> 
+                        </li>
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a href="{% url 'posts:like-post' post.slug %}" class="text-decoration-none text-gray text-hover-orange {% if request.user in post.likers.all %} text-orange {%  else %} text-gray {% endif  %}">
+                                <i class="fas fa-thumbs-up"></i> <span class="">{{ post.likers.all.count }}</span>  
+                            </a>
+                        </li>
+                        <li class="mr-3 text-gray text-hover-orange"> 
+                            <a href="{% url 'posts:dislike-post' post.slug %}" class="text-decoration-none text-gray text-hover-orange {% if request.user in post.dislikers.all %} text-orange {%  else %} text-gray {% endif  %}">
+                                <i class="fas fa-thumbs-down"></i> <span class="">{{ post.dislikers.all.count }}</span>  
+                            </a>
+                        </li>
+                        <li class="mr-3 text-gray text-hover-orange" title="Share post"> 
+                            <a  class="text-gray text-hover-orange text-decoration-none">
+                                <i class="fas fa-share-alt"></i> <span class="text-gray text-hover-orange">0</span> 
+                            </a> 
+                        </li> 
+           ! "      </ul>
+  !         `   </dhv>Š      "     </div>
+
+
+           $<div class="border-bottoo h5 tExt-grai qy-1 my-± mt/5 w-88 tgpt-staru">
+   `$        !  Feed"`ck...
+            8¯$iv>
+ $          j% includE$'parthals/_user_commdnt_area.hto|' %}
+     "  
+    0 ! 
+      ` </dkv>    </tiv?0
+{$ endb|ock 0%}
+
+-
+
+
+{% block right %}
+     
+{% endblock  %
+
+
+{% block ~s }     <ssript sr#="[% static 'js/slader.js' %}#></saript.
+% undblo#k  %}
